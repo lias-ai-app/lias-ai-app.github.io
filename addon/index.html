@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>תוסף LIAS לפיירפוקס</title>
+  <style>
+    :root { --bg: #fff; --text: #1d1d1f; --muted: #5f6368; --accent: #e66000; --card: #f5f5f7; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #121212; --text: #eee; --muted: #aaa; --card: #1e1e1e; } }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 system-ui, sans-serif; text-align: right; }
+    main { max-width: 560px; margin: 0 auto; padding: 24px 16px; }
+    h1 { font-size: 22px; margin: 0 0 8px; } h2 { font-size: 18px; margin: 24px 0 4px; }
+    ol { padding-inline-start: 22px; } li { margin: 6px 0; }
+    .btn { display: block; text-align: center; background: var(--accent); color: #fff; text-decoration: none; border: 0;
+           border-radius: 12px; padding: 14px; font: inherit; font-weight: 600; margin: 12px 0; width: 100%; box-sizing: border-box; }
+    .btn.alt { background: var(--card); color: var(--text); }
+    .note { color: var(--muted); font-size: 14px; }
+    section { background: var(--card); border-radius: 12px; padding: 4px 16px 8px; margin: 12px 0; }
+  </style>
+</head>
+<body>
+<main>
+  <!-- Stable link for the LIAS Sign-in add-on. lias-signin.xpi is always the latest signed build;
+       updates.json is the add-on's update_url, so installed copies update themselves. -->
+  <h1>תוסף LIAS לפיירפוקס</h1>
+  <p class="note">התחברות ל-gov.il דרך פיירפוקס ושיתוף ההתחברות עם LIAS. גרסה <span id="ver">0.4.0</span>.</p>
+  <a id="install" class="btn" href="lias-signin.xpi">התקן את התוסף</a>
+  <a class="btn alt" href="lias-signin.xpi" download="lias-signin.xpi">הורד את הקובץ</a>
+
+  <section>
+    <h2>במק</h2>
+    <ol>
+      <li>פותחים את הדף הזה <b>בפיירפוקס</b> ולוחצים "התקן את התוסף".</li>
+      <li>פיירפוקס שואל אם להוסיף את LIAS Sign-in — לוחצים "הוספה".</li>
+      <li>אם לא קרה כלום: מורידים את הקובץ, ובפיירפוקס נכנסים ל-about:addons ← גלגל השיניים ← "התקנת תוספת מקובץ".</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>בטלפון (אנדרואיד)</h2>
+    <ol>
+      <li>מתקינים את <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">פיירפוקס מ-Google Play</a>.</li>
+      <li>מורידים את הקובץ בכפתור "הורד את הקובץ".</li>
+      <li>בפיירפוקס: הגדרות ← "אודות Firefox" ← מקישים 5 פעמים על הלוגו (פעם אחת בלבד בטלפון).</li>
+      <li>חוזרים להגדרות ← "התקנת הרחבה מקובץ" ← בוחרים את הקובץ שהורד ← "הוספה".</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>אחרי ההתקנה</h2>
+    <ol>
+      <li>מחברים את התוסף ל-LIAS: בהגדרות LIAS במק, תחת "התחברות", פותחים בפיירפוקס את קישור החיבור או סורקים את הקוד.</li>
+      <li>עדכונים מגיעים לבד — פיירפוקס בודק אותם מעצמו פעם ביום.</li>
+    </ol>
+  </section>
+  <p class="note">לשליחה למישהו: שלחו את הקישור לדף הזה. אם הוא נפתח בדפדפן אחר, הוא יפנה לפיירפוקס.</p>
+</main>
+<script>
+(function () {
+  var ua = navigator.userAgent;
+  if (/Firefox\//.test(ua)) return;
+  // Not Firefox: route the install button through /ff/, which hands the link to Firefox.
+  document.getElementById("install").href = "/ff/?go=" + encodeURIComponent(location.origin + "/addon/");
+  document.getElementById("install").textContent = "פתח בפיירפוקס כדי להתקין";
+})();
+</script>
+</body>
+</html>
