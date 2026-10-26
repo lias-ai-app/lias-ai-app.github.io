@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>אפליקציית LIAS</title>
+<link rel="icon" href="../favicon.png">
+<style>
+  :root { --bg:#fff; --text:#1d1d1f; --muted:#5f6368; --accent:#1a73e8; --accent-ink:#fff; --card:#f5f5f7;
+          --line:#dadce0; --ok:#1e8e3e; --warn-bg:#fef7e0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121212; --text:#eee; --muted:#aaa; --accent:#8ab4f8; --accent-ink:#121212; --card:#1e1e1e;
+            --line:#3c4043; --ok:#81c995; --warn-bg:#3a3020; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:17px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; text-align:right; }
+  main { max-width:600px; margin:0 auto; padding:20px 16px 40px; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  p { margin:6px 0; } ol { padding-inline-start:22px; margin:6px 0; } li { margin:6px 0; }
+  .note { color:var(--muted); font-size:14px; }
+  .card { background:var(--card); border-radius:14px; padding:14px 16px; margin:12px 0; }
+  .office { direction:ltr; text-align:right; font-weight:600; overflow-wrap:anywhere; }
+  .btn { display:block; text-align:center; background:var(--accent); color:var(--accent-ink); text-decoration:none; border:0;
+         border-radius:12px; padding:14px; font:inherit; font-weight:600; margin:10px 0; width:100%; cursor:pointer; }
+  .btn.big { font-size:19px; padding:16px; }
+  .btn.alt { background:var(--card); color:var(--text); border:1px solid var(--line); }
+  .banner { border-radius:12px; padding:10px 14px; margin:12px 0; background:var(--warn-bg); font-size:15px; }
+  .linkbox { direction:ltr; text-align:left; font-size:13px; overflow-wrap:anywhere; background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:8px; }
+  .ok { color:var(--ok); font-size:14px; min-height:1.4em; }
+  [hidden] { display:none !important; }
+</style>
+</head>
+<body>
+<main>
+  <!-- General app download page (PLAN-033). The office account comes from #o=...;
+       the fragment never reaches a server and this page never sends it anywhere. -->
+  <h1>אפליקציית LIAS</h1>
+
+  <section id="missing" hidden>
+    <div class="banner">בקישור חסר חשבון המשרד. בקשו מהמשרד את הקישור המלא.</div>
+  </section>
+
+  <section id="android" hidden>
+    <div class="card"><p class="note">חשבון המשרד</p><p class="office" id="office-a"></p></div>
+    <a class="btn big" id="dl" href="https://github.com/lias-ai-app/lias-releases/releases/latest/download/LIAS-latest.apk">הורדת האפליקציה</a>
+    <button class="btn alt" id="open" type="button">האפליקציה כבר מותקנת? פתח</button>
+    <ol>
+      <li>מתקינים את האפליקציה מהקובץ שירד.</li>
+      <li>פותחים אותה.</li>
+      <li>האפליקציה נפתחת במסך "בקשה להתחבר" וחשבון המשרד כבר ממולא.</li>
+      <li>המשרד מאשר את הבקשה במק.</li>
+    </ol>
+    <p class="note">לחיצה על ההורדה מעתיקה את הקישור הזה, כדי שהאפליקציה תדע לאיזה משרד להתחבר.</p>
+  </section>
+
+  <section id="other" hidden>
+    <div class="card"><p class="note">חשבון המשרד</p><p class="office" id="office-o"></p></div>
+    <p>האפליקציה מיועדת לטלפוני אנדרואיד. פתחו את הקישור הזה בטלפון:</p>
+    <p class="linkbox" id="link"></p>
+    <button class="btn" id="copy" type="button">העתקת הקישור</button>
+    <p class="ok" id="copied" aria-live="polite"></p>
+  </section>
+</main>
+<script>
+(function () {
+  var m = /(?:^#|&)o=([^&]*)/.exec(location.hash);
+  var office = "";
+  try { office = m ? decodeURIComponent(m[1]).trim() : ""; } catch (e) { office = ""; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(office)) { document.getElementById("missing").hidden = false; return; }
+
+  function copy(text) {
+    try { if (navigator.clipboard) return navigator.clipboard.writeText(text).then(function () { return true; }, fallback); }
+    catch (e) {}
+    return Promise.resolve(fallback());
+    function fallback() {
+      var t = document.createElement("textarea");
+      t.value = text; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.opacity = "0";
+      document.body.appendChild(t); t.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(t); return ok;
+    }
+  }
+
+  if (/Android/i.test(navigator.userAgent)) {
+    document.getElementById("android").hidden = false;
+    document.getElementById("office-a").textContent = office;
+    var dl = document.getElementById("dl");
+    dl.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      var go = function () { location.href = dl.href; };
+      var timer = setTimeout(go, 800);
+      copy(location.href).then(function () { clearTimeout(timer); go(); }, function () { clearTimeout(timer); go(); });
+    });
+    document.getElementById("open").addEventListener("click", function () {
+      location.href = "lias://request?o=" + encodeURIComponent(office);
+    });
+  } else {
+    document.getElementById("other").hidden = false;
+    document.getElementById("office-o").textContent = office;
+    document.getElementById("link").textContent = location.href;
+    document.getElementById("copy").addEventListener("click", function () {
+      copy(location.href).then(function (ok) {
+        document.getElementById("copied").textContent = ok === false ? "ההעתקה נכשלה, העתיקו ידנית." : "הקישור הועתק.";
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
