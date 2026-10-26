@@ -23,19 +23,14 @@
 <main>
   <!-- Copy to the pages repo (lias-ai-app.github.io) as /ff/index.html.
        /ff/?go=<url> for a link without secrets (the extension's .xpi);
-       /ff/#go=<url> for the pairing link, whose key stays in the #fragment and never reaches a server. -->
+       /ff/#go=<url> for the pairing link, whose key stays in the #fragment and never reaches a server.
+       A router only: install instructions live in /addon/, which links here. -->
   <h1>הקישור הזה נפתח בפיירפוקס בלבד</h1>
   <p id="bad" hidden>הקישור אינו תקין. בקשו קישור חדש מ-LIAS.</p>
   <div id="ok">
     <a id="open" class="btn" href="#">פתח בפיירפוקס</a>
     <button id="copy" class="btn alt" type="button">העתק את הקישור</button>
-    <h2 style="font-size:18px">שלב אחר שלב</h2>
-    <ol>
-      <li>מתקינים את פיירפוקס: <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">אנדרואיד (Google Play)</a> · <a href="https://www.mozilla.org/firefox/new/">מחשב</a>.</li>
-      <li>פותחים שוב את הקישור הזה — הכפתור למעלה פותח אותו בפיירפוקס. אם לא נפתח: מעתיקים את הקישור ומדביקים בשורת הכתובת של פיירפוקס.</li>
-      <li>בהתקנת התוסף פיירפוקס שואל אם להוסיף את LIAS Sign-in — מקישים "הוספה".</li>
-      <li>החיבור: פותחים בפיירפוקס את קישור החיבור (או סורקים את הקוד) שמופיע בהגדרות LIAS במק, תחת "התחברות". החיבור נעשה מעצמו.</li>
-    </ol>
+    <p class="note">אין פיירפוקס או שהתוסף עוד לא מותקן? ההוראות המלאות בדף <a href="/addon/">התקנת התוסף</a>.</p>
     <p class="note" id="android-note" hidden>אם פיירפוקס לא מותקן, הכפתור מעביר לדף ההתקנה שלו ב-Google Play.</p>
   </div>
 </main>
