@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>LIAS — פתיחה בפיירפוקס</title>
+  <style>
+    :root { --bg: #fff; --text: #1d1d1f; --muted: #5f6368; --accent: #e66000; --card: #f5f5f7; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #121212; --text: #eee; --muted: #aaa; --card: #1e1e1e; } }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 system-ui, sans-serif; text-align: right; }
+    main { max-width: 560px; margin: 0 auto; padding: 24px 16px; }
+    h1 { font-size: 22px; margin: 0 0 12px; }
+    ol { padding-inline-start: 22px; } li { margin: 8px 0; }
+    .btn { display: block; text-align: center; background: var(--accent); color: #fff; text-decoration: none; border: 0;
+           border-radius: 12px; padding: 14px; font: inherit; font-weight: 600; margin: 12px 0; width: 100%; cursor: pointer; }
+    .btn.alt { background: var(--card); color: var(--text); }
+    .note { color: var(--muted); font-size: 14px; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+<main>
+  <!-- Copy to the pages repo (lias-ai-app.github.io) as /ff/index.html.
+       /ff/?go=<url> for a link without secrets (the extension's .xpi);
+       /ff/#go=<url> for the pairing link, whose key stays in the #fragment and never reaches a server. -->
+  <h1>הקישור הזה נפתח בפיירפוקס בלבד</h1>
+  <p id="bad" hidden>הקישור אינו תקין. בקשו קישור חדש מ-LIAS.</p>
+  <div id="ok">
+    <a id="open" class="btn" href="#">פתח בפיירפוקס</a>
+    <button id="copy" class="btn alt" type="button">העתק את הקישור</button>
+    <h2 style="font-size:18px">שלב אחר שלב</h2>
+    <ol>
+      <li>מתקינים את פיירפוקס: <a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">אנדרואיד (Google Play)</a> · <a href="https://www.mozilla.org/firefox/new/">מחשב</a>.</li>
+      <li>פותחים שוב את הקישור הזה — הכפתור למעלה פותח אותו בפיירפוקס. אם לא נפתח: מעתיקים את הקישור ומדביקים בשורת הכתובת של פיירפוקס.</li>
+      <li>בהתקנת התוסף פיירפוקס שואל אם להוסיף את LIAS Sign-in — מקישים "הוספה".</li>
+      <li>החיבור: פותחים בפיירפוקס את קישור החיבור (או סורקים את הקוד) שמופיע בהגדרות LIAS במק, תחת "התחברות". החיבור נעשה מעצמו.</li>
+    </ol>
+    <p class="note" id="android-note" hidden>אם פיירפוקס לא מותקן, הכפתור מעביר לדף ההתקנה שלו ב-Google Play.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var ALLOWED = ["https://github.com/lias-ai-app/lias-releases/releases/download/", "https://lias-ai-app.github.io/ext-pair/"];
+  var PLAY = "https://play.google.com/store/apps/details?id=org.mozilla.firefox";
+  function param(src) { var m = /(?:^|[?#&])go=([^&]*)/.exec(src); try { return m ? decodeURIComponent(m[1]) : ""; } catch (e) { return ""; } }
+  var secret = param(location.hash);
+  var go = secret || param(location.search);
+  var good = go && ALLOWED.some(function (p) { return go.indexOf(p) === 0; });
+  if (!good) { document.getElementById("bad").hidden = false; document.getElementById("ok").hidden = true; return; }
+  var ua = navigator.userAgent;
+  var isFirefox = /Firefox\//.test(ua) || /FxiOS/.test(ua);
+  var isAndroid = /Android/.test(ua);
+  if (isFirefox) { location.replace(go); return; }
+  var open = document.getElementById("open");
+  // An Android intent cannot carry a #fragment, so the pairing link (secret in the fragment) is copied, not sent.
+  var hasFragment = go.indexOf("#") >= 0;
+  if (isAndroid && !hasFragment) {
+    var u = go.replace(/^https:\/\//, "");
+    open.href = "intent://" + u + "#Intent;scheme=https;package=org.mozilla.firefox;S.browser_fallback_url=" + encodeURIComponent(PLAY) + ";end";
+    document.getElementById("android-note").hidden = false;
+  } else if (isAndroid) {
+    open.textContent = "העתק ופתח את פיירפוקס";
+    open.href = "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=org.mozilla.firefox;S.browser_fallback_url=" + encodeURIComponent(PLAY) + ";end";
+    open.addEventListener("click", function () { try { navigator.clipboard.writeText(go); } catch (e) {} });
+  } else {
+    open.hidden = true;
+  }
+  document.getElementById("copy").addEventListener("click", function () {
+    var b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(go) : Promise.reject()).then(
+      function () { b.textContent = "הועתק ✓ — הדביקו בפיירפוקס"; },
+      function () { prompt("העתיקו את הקישור:", go); });
+  });
+})();
+</script>
+</body>
+</html>
