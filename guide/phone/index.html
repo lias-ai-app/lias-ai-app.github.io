@@ -24,9 +24,12 @@ p{margin:0 0 12px}
 ol,ul{margin:0 0 12px;padding-inline-start:24px}
 li{margin:0 0 6px}
 figure{margin:12px 0 18px}
-figure img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);background:#fff}
-figure.phone img{max-width:300px;margin-inline:auto}
-figcaption{color:var(--mut);font-size:14px;margin-top:6px}
+figure img{width:100%;height:auto;display:block}
+.shots{display:grid;gap:22px 18px;grid-template-columns:repeat(auto-fill,minmax(240px,300px));justify-content:center;margin:14px 0 18px}
+figure.phone{margin:0;max-width:300px;justify-self:center}
+.bezel{background:#0a0b0d;border:1px solid #2a2d33;border-radius:34px;padding:9px;box-shadow:0 6px 20px rgba(0,0,0,.28)}
+.bezel img{border-radius:26px;background:#131419}
+figcaption{color:var(--fg);font-size:14.5px;line-height:1.5;margin-top:9px;text-align:center}
 code,.k{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,monospace;background:var(--code);border-radius:6px;padding:1px 6px;font-size:.9em;overflow-wrap:anywhere}
 .btn{display:inline-block;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:0 8px;font-weight:600}
 .box{border-radius:12px;padding:12px 14px;margin:0 0 14px}
@@ -44,7 +47,7 @@ th{color:var(--mut);font-weight:600}
 @media (max-width:640px){body{font-size:16px}h1{font-size:25px}section{padding:14px 14px 4px}.twocol{grid-template-columns:1fr}table{font-size:14px}}
 footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 </style>
-<style>figure.phone img{max-width:280px}.ex{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:6px;padding:0 6px;font-size:13px;font-weight:600}</style>
+<style>.ex{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:6px;padding:0 6px;font-size:13px;font-weight:600}</style>
 </head>
 <body>
 <main>
@@ -61,7 +64,7 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li><a href="#privacy">פרטיות</a></li>
 <li><a href="#problems">תקלות נפוצות</a></li>
 </ol></nav>
-<div class="box warn">התמונות במדריך צולמו בטלפון אמיתי. שמות של לקוחות ותיקים טושטשו. „דוד בדיקה” הוא לקוח בדיקה, לא לקוח אמיתי.</div>
+<div class="box tip">כל התמונות צולמו בגרסה 3.40 עם <b>נתוני הדגמה בלבד</b>: „ישראל ישראלי”, „יוסי מזרחי” ו„משרד דוגמה” הם שמות בדויים, ואין בהם תיקים אמיתיים.</div>
 
 <section id="install"><h2>1. התקנה</h2>
 <ol>
@@ -80,6 +83,9 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li>הקישו <span class="btn">שליחת בקשה</span>. יופיע: „הבקשה נשלחה. אין גישה עד שהמשרד יאשר – המסך יתעדכן לבד.”</li>
 <li>המשרד מאשר במק ובוחר הרשאה. אין צורך לעשות דבר; המסך מתעדכן לבד.</li>
 </ol>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/01-request.jpg" alt="מסך החיבור הראשון" loading="lazy" width="1080" height="2400"></div><figcaption>המסך הראשון: סריקת קוד, הדבקת קוד, או „שליחת בקשה למחשב (בלי קוד)”.</figcaption></figure>
+</div>
 <table><tr><th>הרשאה</th><th>מה מותר</th></tr>
 <tr><td>צפייה בלבד</td><td>רואים את המסמכים באפליקציה, בלי להוריד.</td></tr>
 <tr><td>הורדה</td><td>הטלפון מוריד עבור הלקוח במקביל למק.</td></tr>
@@ -89,9 +95,12 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 </section>
 
 <section id="tour"><h2>3. סיור בלשוניות</h2>
-<div class="twocol">
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/01-home.jpg" alt="מסך הבית"><figcaption>בית: „כל החדשים” / „לפי תיק”. שם התיק והפעמון טושטשו.</figcaption></figure>
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/02-client-mode.jpg" alt="מצב לקוח"><figcaption>מצב לקוח: מסגרת צבעונית, „פרופיל לקוח: …” ו„חזרה למשרד”.</figcaption></figure>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/03-home-office.jpg" alt="מסך הבית" loading="lazy" width="1080" height="2400"></div><figcaption>בית: „כל החדשים” / „לפי תיק”, ומעליהם התראה על כניסה לאתרי בתי המשפט.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/04-cases.jpg" alt="תיקים" loading="lazy" width="1080" height="2400"></div><figcaption>תיקים: חיפוש, ומיון לפי לקוח, ערכאה או צד שכנגד.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/05-clients.jpg" alt="לקוחות" loading="lazy" width="1080" height="2400"></div><figcaption>לקוחות: כל לקוח עם מספר התיקים והערכאות.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/07-calendar.jpg" alt="מועדים" loading="lazy" width="1080" height="2400"></div><figcaption>מועדים: דיונים קרובים, עם מספר התיק והשעה.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/08-more.jpg" alt="עוד" loading="lazy" width="1080" height="2400"></div><figcaption>עוד: ניהול, הוספת לקוח, ניתוח, כלים והגדרות.</figcaption></figure>
 </div>
 <table><tr><th>לשונית</th><th>מה יש בה</th></tr>
 <tr><td>בית</td><td>מסמכים חדשים מכל התיקים, ראשונים למעלה. בתחתית: מתי סונכרן כל אתר (נט המשפט, בתי הדין, הוצאה לפועל).</td></tr>
@@ -105,9 +114,15 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li><b>חיפוש</b> (זכוכית מגדלת) — „חיפוש בכל התיקים והמסמכים”: מספר תיק (גם חלקי), שם, ערכאה, נושא או כותרת מסמך.</li>
 <li><b>הורדה</b> (חץ) — „הורדה מהטלפון” (פרק 4). <b>גלגל השיניים</b> — הגדרות.</li>
 </ul>
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/03-bell-inbox.jpg" alt="תיבת ההודעות"><figcaption>תיבת ההודעות שמאחורי הפעמון.</figcaption></figure>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/13-bell.jpg" alt="תיבת ההודעות" loading="lazy" width="1080" height="2400"></div><figcaption>הפעמון: תיבת ההודעות, למשל „יוסי מזרחי התחבר/ה ומוכן/ה”.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/12-search.jpg" alt="חיפוש" loading="lazy" width="1080" height="2400"></div><figcaption>חיפוש: מספר תיק חלקי מוצא תיקים ומסמכים.</figcaption></figure>
+</div>
 <h3>מצב לקוח</h3>
 <p>כשנכנסים ללקוח, כל המסך מקבל <b>מסגרת בצבע של הלקוח</b> ופס עליון „פרופיל לקוח: שם”. כל מה שרואים ועושים — רק של הלקוח הזה. <span class="btn">חזרה למשרד</span> מחזיר לתצוגת המשרד. אם יש מסגרת — אתם לא במשרד.</p>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/06-client-mode.jpg" alt="מצב לקוח" loading="lazy" width="1080" height="2400"></div><figcaption>מצב לקוח: מסגרת צבעונית, „פרופיל לקוח: …” ו„חזרה למשרד”.</figcaption></figure>
+</div>
 </section>
 
 <section id="download"><h2>4. הורדות מהטלפון</h2>
@@ -117,7 +132,6 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li><span class="btn">הורדה עכשיו</span>. ההתקדמות מופיעה ב„ריצות אחרונות”.</li>
 <li>הקישו על ריצה כדי לראות את הפירוט: כמה ברשימה, חדשים, הורדו, הועלו, דולגו.</li>
 </ol>
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/04-phone-download.jpg" alt="הורדה מהטלפון"><figcaption>„הורדה מהטלפון” של לקוח בדיקה. הריצה כאן נכשלה כי עוד לא הוזנו פרטי כניסה.</figcaption></figure>
 <h3>השורה „מחובר בשם”</h3>
 <p>בכל ריצה מופיע <code dir="rtl">מחובר בשם: מי · איך · מתי</code> — למשל „המשרד” או „לקוח …”, ואיך נכנסו (קוד מהטלפון, קישור שהלקוח נכנס בו, חיבור שהגיע מהטלפון). <b>בדקו שזה הלקוח הנכון.</b> אם המשתמש המחובר לפורטל אינו הלקוח שנבחר, ההורדה נעצרת ושום דבר לא נשמר.</p>
 <p>„מי מוריד את התיקים של המשרד” נקבע בהגדרות: במקביל (ברירת מחדל), תיאום, רק המק, או רק הטלפון — אותה הגדרה כמו במק.</p>
@@ -127,33 +141,43 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <p>הדרך המהירה להיכנס לפורטלים מהטלפון היא התוסף <b>LIAS Sign-in</b> בפיירפוקס לאנדרואיד. הוא שולח את הכניסה ישר לאפליקציה, גם כשהמחשב כבוי.</p>
 <ol>
 <li>התקינו את Firefox מ־Google Play.</li>
-<li>באפליקציה: הגדרות ← <b>המשרד והחיבורים</b> ← <b>„תוסף פיירפוקס לכניסה מהטלפון”</b>.</li>
+<li>באפליקציה: הגדרות ← <b>המשרד והחיבורים</b> (בטלפון שמנהל כמה אנשים: <b>האנשים שלי</b>), ובתחתית הדף ← <b>„תוסף פיירפוקס לכניסה מהטלפון”</b>.</li>
 <li><span class="btn">התקנה</span> — נפתח בפיירפוקס הדף <a href="https://lias-ai-app.github.io/addon/">lias-ai-app.github.io/addon</a>. התקינו משם את התוסף.</li>
 <li>חזרו לאפליקציה ← <span class="btn">חיבור</span> ← „למי הכניסה?”: <b>המשרד (אני)</b> או לקוח מהרשימה.</li>
 <li>קישור החיבור נפתח בפיירפוקס ומתחבר לבד. אם לא נפתח — הוא הועתק; הדביקו אותו בתוסף.</li>
 <li>בדף התוסף שלושת השלבים — פיירפוקס, התקנה, חיבור — צריכים להיות ירוקים.</li>
 </ol>
-<div class="twocol">
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/05-settings-firefox.jpg" alt="הגדרות תוסף"><figcaption>„התוסף בפיירפוקס” בהגדרות: התקנה וחיבור.</figcaption></figure>
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/06-pair-who.jpg" alt="למי הכניסה"><figcaption>„למי הכניסה?” — שמות לקוחות אמיתיים טושטשו.</figcaption></figure>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/09-settings.jpg" alt="הגדרות" loading="lazy" width="1080" height="2400"></div><figcaption>הגדרות: המשרד, עדכון האפליקציה, תמלול והערות.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/10-settings-office.jpg" alt="חשבון וחיבור למק" loading="lazy" width="1080" height="2400"></div><figcaption>החיבורים בהגדרות: בקשות למק וחיבורים ומכשירים.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/11-firefox.jpg" alt="תוסף פיירפוקס" loading="lazy" width="1080" height="2400"></div><figcaption>בתחתית הדף: „תוסף פיירפוקס לכניסה מהטלפון”, עם התקנה וחיבור.</figcaption></figure>
 </div>
-<figure class="phone"><img src="2026-10-30-phone-app-lawyer/07-addon-page.jpg" alt="דף התוסף"><figcaption>דף התוסף בפיירפוקס: כל השלבים ירוקים.</figcaption></figure>
 <p>מאז, כשנכנסים ל־gov.il בפיירפוקס, האפליקציה מקבלת את הכניסה („הכניסה מהתוסף נשמרה. ההורדה מתחילה.”). במק — ראו <a href="https://lias-ai-app.github.io/guide/lawyer/">מדריך המק</a>.</p>
 </section>
 
 <section id="notes"><h2>6. הערות, דפים, הקלטות ומסמכים</h2>
 <h3>הערה / דיווח</h3>
-<p>העיפרון בצד המסך פותח „הערה / דיווח על המסך הזה”: טקסט, צילום המסך, תמונה מהגלריה, הקלטה קולית (עד 8 תמונות ו־5 הקלטות). <b>לפני שליחה גררו מלבן על כל מה שפרטי — הוא יושחר.</b> המצב והתשובה מהמק מופיעים ב„עוד ← הערה / דיווח”.</p>
+<p>העיפרון הצהוב בצד המסך פותח „הערה / דיווח על המסך הזה”: טקסט, צילום המסך, תמונה מהגלריה, הקלטה קולית (עד 8 תמונות ו־5 הקלטות). <b>לפני שליחה גררו מלבן על כל מה שפרטי — הוא יושחר.</b> המצב והתשובה מהמק מופיעים ב„עוד ← הערה / דיווח”.</p>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/14-note.jpg" alt="הערות ודיווחים" loading="lazy" width="1080" height="2400"></div><figcaption>„הערות ודיווחים”: הערה חדשה, וכל מה ששלחתם עם המצב שלו.</figcaption></figure>
+</div>
 <h3>דפים ודוחות</h3>
 <p>„עוד ← דפים זמינים”: דוחות, מסמכים וצירי זמן שהמק פרסם. „פתיחה” מציג באפליקציה; „שיתוף” שולח לאפליקציה אחרת.</p>
 <h3>הקלטות לתמלול</h3>
 <p>„עוד ← תמלול הקלטה”: מקליטים או בוחרים קובץ שמע. הוא נשלח למק, והתמלול חוזר לאפליקציה.</p>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/15-transcribe.jpg" alt="תמלול הקלטה" loading="lazy" width="1080" height="2400"></div><figcaption>תמלול הקלטה: המק מתמלל במנוע שנבחר (למשל Whisper מקומי).</figcaption></figure>
+</div>
 <h3>בחירת מסמכים, סינון ו־ZIP</h3>
 <ul>
 <li>בתיבת המסמכים מסננים: הכל, לא נקראו, החלטות, שלנו, של הצד השני, חשובים.</li>
 <li>לחיצה ארוכה על מסמך פותחת בחירה. אחר כך: סמן כנקרא, סמן כחשוב, או <b>הורד</b> לטלפון.</li>
 <li>„ZIP של התיק לטלפון”: המחשב אורז את התיק, וכשמופיע „קובץ ZIP מהמחשב מוכן” — מורידים אותו.</li>
 </ul>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/16-case.jpg" alt="דף תיק" loading="lazy" width="1080" height="2400"></div><figcaption>דף תיק: מסמכים, מועדים, משימות וניתוח, ו„בחירה · ZIP · הורדה”.</figcaption></figure>
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/17-select.jpg" alt="בחירת מסמכים" loading="lazy" width="1080" height="2400"></div><figcaption>„הורדת מסמכים”: סינון לפי סוג ותאריך, וסימון המסמכים.</figcaption></figure>
+</div>
 </section>
 
 <section id="battery"><h2>7. סוללה, רקע ועדכונים</h2>
@@ -163,6 +187,9 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li>כבו „חיסכון בסוללה” כשמורידים הרבה; מתחת לסף הסוללה (בהגדרות LIAS: „תנאי הטלפון להורדה”) הבדיקה לא מתחילה בלי מטען.</li>
 <li>בהגדרות LIAS: „כל כמה זמן לבדוק ברקע” (15–240 דק׳) ו„לבדוק רק ב־Wi-Fi”.</li>
 </ol>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/18-battery.jpg" alt="צריכת סוללה" loading="lazy" width="1080" height="2400"></div><figcaption>הגדרות ← עדכונים אוטומטיים: פעולה ברקע, מרווח בין ריצות וסף סוללה.</figcaption></figure>
+</div>
 <p><b>עדכון:</b> כשיש גרסה חדשה מגיעה הודעה בפעמון „גרסה חדשה … מוכנה” עם <span class="btn">עדכן</span>. אפשר גם הגדרות ← „עדכון האפליקציה”. קובץ שלא עבר בדיקת שלמות לא יותקן.</p>
 </section>
 
@@ -172,6 +199,9 @@ footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
 <li>צילומי מסך: כשהאפשרות כבויה, מסמכים לא נראים בצילומי מסך.</li>
 <li>המסמכים השמורים בטלפון מוצפנים.</li>
 </ul>
+<div class="shots">
+<figure class="phone"><div class="bezel"><img src="2026-10-30-phone-app-lawyer/19-lock.jpg" alt="פרטיות ואבטחה" loading="lazy" width="1080" height="2400"></div><figcaption>פרטיות ואבטחה: נעילה בטביעת אצבע או בקוד, וצילומי מסך. באמולטור אין נעילת מסך, ולכן מופיעה האזהרה.</figcaption></figure>
+</div>
 <div class="box bad"><b>לעולם לא לשלוח</b> — בהערה, בווטסאפ, בטלגרם או במייל: סיסמה או קוד SMS של gov.il, קישור חיבור של תוסף, קישור כניסה של לקוח, צילום מסך עם שם לקוח או מספר תיק בלי השחרה. המשרד לא יבקש מכם אף אחד מאלה.</div>
 </section>
 
