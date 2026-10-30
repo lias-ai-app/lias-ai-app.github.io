@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LIAS — האפליקציה לאנדרואיד</title>
+<style>
+:root{--bg:#f6f5f1;--fg:#1d1d1f;--mut:#5b5b62;--card:#fff;--line:#e3e1da;--acc:#2f5bd3;--warn:#a1520b;--warnbg:#fff4e5;--bad:#b42318;--badbg:#fdecea;--ok:#157a3c;--okbg:#e8f6ee;--code:#eef0f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}}
+:root[data-theme="dark"]{--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:right;line-height:1.7;font-size:17px}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:30px;line-height:1.25;margin:0 0 6px}
+.lead{color:var(--mut);margin:0 0 18px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 26px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px}
+nav.toc a{color:var(--acc);text-decoration:none}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 8px;margin:0 0 22px}
+h2{font-size:22px;margin:0 0 10px;color:var(--acc)}
+h3{font-size:18px;margin:18px 0 6px}
+p{margin:0 0 12px}
+ol,ul{margin:0 0 12px;padding-inline-start:24px}
+li{margin:0 0 6px}
+figure{margin:12px 0 18px}
+figure img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);background:#fff}
+figure.phone img{max-width:300px;margin-inline:auto}
+figcaption{color:var(--mut);font-size:14px;margin-top:6px}
+code,.k{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,monospace;background:var(--code);border-radius:6px;padding:1px 6px;font-size:.9em;overflow-wrap:anywhere}
+.btn{display:inline-block;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:0 8px;font-weight:600}
+.box{border-radius:12px;padding:12px 14px;margin:0 0 14px}
+.tip{background:var(--okbg);color:var(--fg);border-inline-start:4px solid var(--ok)}
+.warn{background:var(--warnbg);border-inline-start:4px solid var(--warn)}
+.bad{background:var(--badbg);border-inline-start:4px solid var(--bad)}
+a{color:var(--acc)}
+.dl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:6px 0 14px}
+.dl a{display:block;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--fg)}
+.dl b{display:block;color:var(--acc)}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top;text-align:right}
+th{color:var(--mut);font-weight:600}
+.twocol{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media (max-width:640px){body{font-size:16px}h1{font-size:25px}section{padding:14px 14px 4px}.twocol{grid-template-columns:1fr}table{font-size:14px}}
+footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
+</style>
+<style>figure.phone img{max-width:280px}.ex{display:inline-block;background:var(--warnbg);color:var(--warn);border-radius:6px;padding:0 6px;font-size:13px;font-weight:600}</style>
+</head>
+<body>
+<main>
+<h1>LIAS בטלפון אנדרואיד — מדריך לעורך דין במשרד</h1>
+<p class="lead">גרסה 3.40 ומעלה. המדריך למחשב: <a href="https://lias-ai-app.github.io/guide/lawyer/">מדריך לעורך דין חדש (מק)</a>.</p>
+<nav class="toc"><b>תוכן</b><ol>
+<li><a href="#install">התקנה</a></li>
+<li><a href="#request">בקשה להתחבר ואישור המשרד</a></li>
+<li><a href="#tour">סיור בלשוניות</a></li>
+<li><a href="#download">הורדות מהטלפון</a></li>
+<li><a href="#signin">כניסה ל־gov.il: תוסף פיירפוקס</a></li>
+<li><a href="#notes">הערות, דפים, הקלטות ומסמכים</a></li>
+<li><a href="#battery">סוללה, רקע ועדכונים</a></li>
+<li><a href="#privacy">פרטיות</a></li>
+<li><a href="#problems">תקלות נפוצות</a></li>
+</ol></nav>
+<div class="box warn">התמונות במדריך צולמו בטלפון אמיתי. שמות של לקוחות ותיקים טושטשו. „דוד בדיקה” הוא לקוח בדיקה, לא לקוח אמיתי.</div>
+
+<section id="install"><h2>1. התקנה</h2>
+<ol>
+<li>פתחו בטלפון את הקישור הכללי: <a href="https://lias-ai-app.github.io/app/">lias-ai-app.github.io/app</a>. זה אותו קישור לכל עורכי הדין.</li>
+<li>הקישו על הורדת קובץ ההתקנה (קובץ APK). האפליקציה לא נמצאת ב־Google Play.</li>
+<li>בפתיחת הקובץ אנדרואיד יציג „מטעמי אבטחה, הטלפון לא מורשה להתקין אפליקציות לא מוכרות”. הקישו <span class="btn">הגדרות</span>, הפעילו <b>„התרה מהמקור הזה”</b> עבור הדפדפן שממנו הורדתם (Chrome או פיירפוקס), וחזרו אחורה.</li>
+<li>הקישו <span class="btn">התקנה</span>. אם Play Protect שואל, בחרו „התקנה בכל זאת”.</li>
+</ol>
+<div class="box tip">אחרי ההתקנה אפשר לכבות שוב את „התרה מהמקור הזה”. עדכונים מגיעים מתוך האפליקציה עצמה (פרק 7).</div>
+</section>
+
+<section id="request"><h2>2. בקשה להתחבר ואישור המשרד</h2>
+<p>אפליקציה שהותקנה עכשיו <b>לא רואה כלום</b>. במסך הראשון „בקשה להתחבר”:</p>
+<ol>
+<li>בחרו את חשבון ה־Google של המשרד, כתבו את שמכם (וטלפון, לא חובה).</li>
+<li>הקישו <span class="btn">שליחת בקשה</span>. יופיע: „הבקשה נשלחה. אין גישה עד שהמשרד יאשר – המסך יתעדכן לבד.”</li>
+<li>המשרד מאשר במק ובוחר הרשאה. אין צורך לעשות דבר; המסך מתעדכן לבד.</li>
+</ol>
+<table><tr><th>הרשאה</th><th>מה מותר</th></tr>
+<tr><td>צפייה בלבד</td><td>רואים את המסמכים באפליקציה, בלי להוריד.</td></tr>
+<tr><td>הורדה</td><td>הטלפון מוריד עבור הלקוח במקביל למק.</td></tr>
+<tr><td>הורדה בשיתוף המק</td><td>הטלפון מוריד ומשתף את הכניסה שלו ל־gov.il עם המק.</td></tr></table>
+<p>ההרשאה הנוכחית מופיעה כ„ההרשאה שלכם: …”. בדף כל לקוח יש גם „הרשאת הטלפון ללקוח הזה”; שינוי בטלפון או במק משנה את שניהם.</p>
+<div class="box bad"><b>נדחה?</b> יופיע „הבקשה נדחתה”. פנו למשרד, ואחרי שבירר — הקישו <span class="btn">שליחת בקשה חדשה</span>. אם מופיע „המשרד ביטל את החיבור”, הגישה הופסקה; גם כאן פונים למשרד.</div>
+</section>
+
+<section id="tour"><h2>3. סיור בלשוניות</h2>
+<div class="twocol">
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/01-home.jpg" alt="מסך הבית"><figcaption>בית: „כל החדשים” / „לפי תיק”. שם התיק והפעמון טושטשו.</figcaption></figure>
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/02-client-mode.jpg" alt="מצב לקוח"><figcaption>מצב לקוח: מסגרת צבעונית, „פרופיל לקוח: …” ו„חזרה למשרד”.</figcaption></figure>
+</div>
+<table><tr><th>לשונית</th><th>מה יש בה</th></tr>
+<tr><td>בית</td><td>מסמכים חדשים מכל התיקים, ראשונים למעלה. בתחתית: מתי סונכרן כל אתר (נט המשפט, בתי הדין, הוצאה לפועל).</td></tr>
+<tr><td>תיקים</td><td>כל התיקים, חיפוש לפי מספר, נושא או צד, ומיון לפי ערכאה או לפי הצד שכנגד.</td></tr>
+<tr><td>לקוחות</td><td>הלקוחות של המשרד. הקשה על לקוח פותחת את דף הלקוח.</td></tr>
+<tr><td>מועדים</td><td>דיונים ומועדים, נכונים לעדכון האחרון מהמק.</td></tr>
+<tr><td>עוד</td><td>הגדרות, הערות ודיווחים, דפים זמינים, תמלול, עזרה.</td></tr></table>
+<h3>שורת הכלים העליונה</h3>
+<ul>
+<li><b>הפעמון</b> — תיבת הודעות: גרסה חדשה, בדיקה שהסתיימה, חיבור של לקוח שפג, תשובות להערות. „סמן הכל כנקרא” למעלה.</li>
+<li><b>חיפוש</b> (זכוכית מגדלת) — „חיפוש בכל התיקים והמסמכים”: מספר תיק (גם חלקי), שם, ערכאה, נושא או כותרת מסמך.</li>
+<li><b>הורדה</b> (חץ) — „הורדה מהטלפון” (פרק 4). <b>גלגל השיניים</b> — הגדרות.</li>
+</ul>
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/03-bell-inbox.jpg" alt="תיבת ההודעות"><figcaption>תיבת ההודעות שמאחורי הפעמון.</figcaption></figure>
+<h3>מצב לקוח</h3>
+<p>כשנכנסים ללקוח, כל המסך מקבל <b>מסגרת בצבע של הלקוח</b> ופס עליון „פרופיל לקוח: שם”. כל מה שרואים ועושים — רק של הלקוח הזה. <span class="btn">חזרה למשרד</span> מחזיר לתצוגת המשרד. אם יש מסגרת — אתם לא במשרד.</p>
+</section>
+
+<section id="download"><h2>4. הורדות מהטלפון</h2>
+<p>הטלפון יכול להוריד מסמכים מהפורטלים בעצמו, גם כשהמק כבוי — אם ההרשאה היא „הורדה” או „הורדה בשיתוף המק”. ב„צפייה בלבד” אין כפתור הורדה.</p>
+<ol>
+<li>היכנסו ללקוח (מצב לקוח), והקישו על חץ ההורדה.</li>
+<li><span class="btn">הורדה עכשיו</span>. ההתקדמות מופיעה ב„ריצות אחרונות”.</li>
+<li>הקישו על ריצה כדי לראות את הפירוט: כמה ברשימה, חדשים, הורדו, הועלו, דולגו.</li>
+</ol>
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/04-phone-download.jpg" alt="הורדה מהטלפון"><figcaption>„הורדה מהטלפון” של לקוח בדיקה. הריצה כאן נכשלה כי עוד לא הוזנו פרטי כניסה.</figcaption></figure>
+<h3>השורה „מחובר בשם”</h3>
+<p>בכל ריצה מופיע <code dir="rtl">מחובר בשם: מי · איך · מתי</code> — למשל „המשרד” או „לקוח …”, ואיך נכנסו (קוד מהטלפון, קישור שהלקוח נכנס בו, חיבור שהגיע מהטלפון). <b>בדקו שזה הלקוח הנכון.</b> אם המשתמש המחובר לפורטל אינו הלקוח שנבחר, ההורדה נעצרת ושום דבר לא נשמר.</p>
+<p>„מי מוריד את התיקים של המשרד” נקבע בהגדרות: במקביל (ברירת מחדל), תיאום, רק המק, או רק הטלפון — אותה הגדרה כמו במק.</p>
+</section>
+
+<section id="signin"><h2>5. כניסה ל־gov.il: תוסף פיירפוקס</h2>
+<p>הדרך המהירה להיכנס לפורטלים מהטלפון היא התוסף <b>LIAS Sign-in</b> בפיירפוקס לאנדרואיד. הוא שולח את הכניסה ישר לאפליקציה, גם כשהמחשב כבוי.</p>
+<ol>
+<li>התקינו את Firefox מ־Google Play.</li>
+<li>באפליקציה: הגדרות ← <b>המשרד והחיבורים</b> ← <b>„תוסף פיירפוקס לכניסה מהטלפון”</b>.</li>
+<li><span class="btn">התקנה</span> — נפתח בפיירפוקס הדף <a href="https://lias-ai-app.github.io/addon/">lias-ai-app.github.io/addon</a>. התקינו משם את התוסף.</li>
+<li>חזרו לאפליקציה ← <span class="btn">חיבור</span> ← „למי הכניסה?”: <b>המשרד (אני)</b> או לקוח מהרשימה.</li>
+<li>קישור החיבור נפתח בפיירפוקס ומתחבר לבד. אם לא נפתח — הוא הועתק; הדביקו אותו בתוסף.</li>
+<li>בדף התוסף שלושת השלבים — פיירפוקס, התקנה, חיבור — צריכים להיות ירוקים.</li>
+</ol>
+<div class="twocol">
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/05-settings-firefox.jpg" alt="הגדרות תוסף"><figcaption>„התוסף בפיירפוקס” בהגדרות: התקנה וחיבור.</figcaption></figure>
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/06-pair-who.jpg" alt="למי הכניסה"><figcaption>„למי הכניסה?” — שמות לקוחות אמיתיים טושטשו.</figcaption></figure>
+</div>
+<figure class="phone"><img src="2026-10-30-phone-app-lawyer/07-addon-page.jpg" alt="דף התוסף"><figcaption>דף התוסף בפיירפוקס: כל השלבים ירוקים.</figcaption></figure>
+<p>מאז, כשנכנסים ל־gov.il בפיירפוקס, האפליקציה מקבלת את הכניסה („הכניסה מהתוסף נשמרה. ההורדה מתחילה.”). במק — ראו <a href="https://lias-ai-app.github.io/guide/lawyer/">מדריך המק</a>.</p>
+</section>
+
+<section id="notes"><h2>6. הערות, דפים, הקלטות ומסמכים</h2>
+<h3>הערה / דיווח</h3>
+<p>העיפרון בצד המסך פותח „הערה / דיווח על המסך הזה”: טקסט, צילום המסך, תמונה מהגלריה, הקלטה קולית (עד 8 תמונות ו־5 הקלטות). <b>לפני שליחה גררו מלבן על כל מה שפרטי — הוא יושחר.</b> המצב והתשובה מהמק מופיעים ב„עוד ← הערה / דיווח”.</p>
+<h3>דפים ודוחות</h3>
+<p>„עוד ← דפים זמינים”: דוחות, מסמכים וצירי זמן שהמק פרסם. „פתיחה” מציג באפליקציה; „שיתוף” שולח לאפליקציה אחרת.</p>
+<h3>הקלטות לתמלול</h3>
+<p>„עוד ← תמלול הקלטה”: מקליטים או בוחרים קובץ שמע. הוא נשלח למק, והתמלול חוזר לאפליקציה.</p>
+<h3>בחירת מסמכים, סינון ו־ZIP</h3>
+<ul>
+<li>בתיבת המסמכים מסננים: הכל, לא נקראו, החלטות, שלנו, של הצד השני, חשובים.</li>
+<li>לחיצה ארוכה על מסמך פותחת בחירה. אחר כך: סמן כנקרא, סמן כחשוב, או <b>הורד</b> לטלפון.</li>
+<li>„ZIP של התיק לטלפון”: המחשב אורז את התיק, וכשמופיע „קובץ ZIP מהמחשב מוכן” — מורידים אותו.</li>
+</ul>
+</section>
+
+<section id="battery"><h2>7. סוללה, רקע ועדכונים</h2>
+<p>אנדרואיד עוצר אפליקציות ברקע. כדי שהבדיקה ברקע תעבוד:</p>
+<ol>
+<li>הגדרות הטלפון ← אפליקציות ← LIAS ← סוללה ← <b>„ללא הגבלה”</b> (בסמסונג: „לא מוגבל”, והוציאו את LIAS מ„אפליקציות במצב שינה”).</li>
+<li>כבו „חיסכון בסוללה” כשמורידים הרבה; מתחת לסף הסוללה (בהגדרות LIAS: „תנאי הטלפון להורדה”) הבדיקה לא מתחילה בלי מטען.</li>
+<li>בהגדרות LIAS: „כל כמה זמן לבדוק ברקע” (15–240 דק׳) ו„לבדוק רק ב־Wi-Fi”.</li>
+</ol>
+<p><b>עדכון:</b> כשיש גרסה חדשה מגיעה הודעה בפעמון „גרסה חדשה … מוכנה” עם <span class="btn">עדכן</span>. אפשר גם הגדרות ← „עדכון האפליקציה”. קובץ שלא עבר בדיקת שלמות לא יותקן.</p>
+</section>
+
+<section id="privacy"><h2>8. פרטיות</h2>
+<ul>
+<li><b>נעילה בטביעת אצבע או בקוד</b> — פעילה כברירת מחדל: בפתיחה ואחרי 5 דקות בלי שימוש. אל תכבו. אם לטלפון אין נעילת מסך, LIAS לא יכולה להינעל — הגדירו קוד.</li>
+<li>צילומי מסך: כשהאפשרות כבויה, מסמכים לא נראים בצילומי מסך.</li>
+<li>המסמכים השמורים בטלפון מוצפנים.</li>
+</ul>
+<div class="box bad"><b>לעולם לא לשלוח</b> — בהערה, בווטסאפ, בטלגרם או במייל: סיסמה או קוד SMS של gov.il, קישור חיבור של תוסף, קישור כניסה של לקוח, צילום מסך עם שם לקוח או מספר תיק בלי השחרה. המשרד לא יבקש מכם אף אחד מאלה.</div>
+</section>
+
+<section id="problems"><h2>9. תקלות נפוצות</h2>
+<table><tr><th>מה רואים</th><th>מה עושים</th></tr>
+<tr><td>„הטלפון לא מורשה להתקין אפליקציות לא מוכרות”</td><td>הגדרות ← „התרה מהמקור הזה” לדפדפן, וחזרה להתקנה.</td></tr>
+<tr><td>„הבקשה נשלחה” ולא קורה כלום</td><td>המשרד עוד לא אישר. התקשרו למשרד; המסך יתעדכן לבד.</td></tr>
+<tr><td>„הבקשה נדחתה” / „המשרד ביטל את החיבור”</td><td>פנו למשרד, ואז „שליחת בקשה חדשה”.</td></tr>
+<tr><td>אין כפתור הורדה</td><td>ההרשאה היא „צפייה בלבד”. בקשו מהמשרד „הורדה”.</td></tr>
+<tr><td>„צריך להזין פרטי כניסה קודם”</td><td>חברו את תוסף פיירפוקס (פרק 5) והיכנסו ל־gov.il.</td></tr>
+<tr><td>„המשתמש המחובר לפורטל אינו הלקוח שנבחר”</td><td>בדקו את „מחובר בשם”. התחברו בשם הלקוח הנכון ונסו שוב.</td></tr>
+<tr><td>„הכניסה מהתוסף לא התקבלה”</td><td>חברו את התוסף מחדש מההגדרות.</td></tr>
+<tr><td>„אנדרואיד מגביל את LIAS ברקע”</td><td>סוללה ← „ללא הגבלה” (פרק 7).</td></tr>
+<tr><td>„הסוללה חלשה; הבדיקה לא התחילה”</td><td>חברו למטען.</td></tr>
+<tr><td>„המק בודק כרגע; הטלפון ממתין”</td><td>תקין. הטלפון ימשיך כשהמק יסיים.</td></tr>
+<tr><td>„gov.il ביקש אימות אנושי”</td><td>היכנסו ידנית בפיירפוקס; אל תנסו שוב ושוב.</td></tr>
+<tr><td>„קוד האימות לא הגיע”</td><td>ודאו שה־SMS מגיע לטלפון הזה ונסו שוב פעם אחת.</td></tr>
+<tr><td>„קובץ העדכון לא עבר את בדיקת השלמות”</td><td>נסו שוב ב־Wi-Fi, או התקינו מחדש מהקישור הכללי.</td></tr>
+<tr><td>מועדים או מסמכים ישנים</td><td>המק כבוי או לא סונכרן. בדקו את שורת הסנכרון בתחתית „בית”.</td></tr>
+</table>
+</section>
+<footer>LIAS · מדריך האפליקציה לאנדרואיד · 30/10/2026 · <a href="https://lias-ai-app.github.io/guide/lawyer/">מדריך המק</a></footer>
+</main>
+</body>
+</html>
