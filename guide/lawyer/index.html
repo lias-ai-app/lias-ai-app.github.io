@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LIAS — מדריך לעורך דין חדש</title>
+<style>
+:root{--bg:#f6f5f1;--fg:#1d1d1f;--mut:#5b5b62;--card:#fff;--line:#e3e1da;--acc:#2f5bd3;--warn:#a1520b;--warnbg:#fff4e5;--bad:#b42318;--badbg:#fdecea;--ok:#157a3c;--okbg:#e8f6ee;--code:#eef0f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}}
+:root[data-theme="dark"]{--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:right;line-height:1.7;font-size:17px}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:30px;line-height:1.25;margin:0 0 6px}
+.lead{color:var(--mut);margin:0 0 18px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 26px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px}
+nav.toc a{color:var(--acc);text-decoration:none}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 8px;margin:0 0 22px}
+h2{font-size:22px;margin:0 0 10px;color:var(--acc)}
+h3{font-size:18px;margin:18px 0 6px}
+p{margin:0 0 12px}
+ol,ul{margin:0 0 12px;padding-inline-start:24px}
+li{margin:0 0 6px}
+figure{margin:12px 0 18px}
+figure img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line);background:#fff}
+figure.phone img{max-width:300px;margin-inline:auto}
+figcaption{color:var(--mut);font-size:14px;margin-top:6px}
+code,.k{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,monospace;background:var(--code);border-radius:6px;padding:1px 6px;font-size:.9em;overflow-wrap:anywhere}
+.btn{display:inline-block;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:0 8px;font-weight:600}
+.box{border-radius:12px;padding:12px 14px;margin:0 0 14px}
+.tip{background:var(--okbg);color:var(--fg);border-inline-start:4px solid var(--ok)}
+.warn{background:var(--warnbg);border-inline-start:4px solid var(--warn)}
+.bad{background:var(--badbg);border-inline-start:4px solid var(--bad)}
+a{color:var(--acc)}
+.dl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:6px 0 14px}
+.dl a{display:block;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--fg)}
+.dl b{display:block;color:var(--acc)}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top;text-align:right}
+th{color:var(--mut);font-weight:600}
+.twocol{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media (max-width:640px){body{font-size:16px}h1{font-size:25px}section{padding:14px 14px 4px}.twocol{grid-template-columns:1fr}table{font-size:14px}}
+footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
+</style>
+</head>
+<body>
+<main>
+<h1>ברוכים הבאים ל־LIAS</h1>
+<p class="lead">מדריך לעורך דין שמצטרף למשרד שעובד עם LIAS: התקנה, הפעלה, הגדרות ראשונות, הורדה ראשונה ולקוחות. כל התמונות כאן הן מסכים אמיתיים של התוכנה עם נתוני דוגמה בלבד.</p>
+
+<nav class="toc" aria-label="תוכן">
+<b>תוכן</b>
+<ol>
+<li><a href="#what">מה זה LIAS</a></li>
+<li><a href="#install">התקנה על המק</a></li>
+<li><a href="#activate">הפעלה ראשונה — קוד בקשה וקוד הפעלה</a></li>
+<li><a href="#setup">מה מגדירים קודם, לפי הסדר</a></li>
+<li><a href="#first">הורדה ראשונה של תיק</a></li>
+<li><a href="#clients">לקוחות</a></li>
+<li><a href="#lists">מה שולחים למשרד, מה לעולם לא שולחים, ותקלות נפוצות</a></li>
+</ol>
+</nav>
+
+<section id="what">
+<h2>1. מה זה LIAS</h2>
+<p>LIAS מוריד בשבילכם את המסמכים מאתרי בתי המשפט (נט המשפט, בתי הדין) לתוך המק, ומסדר אותם לפי תיק, סוג מסמך ותאריך.</p>
+<p>כל בוקר תראו במסך הבית מה חדש: החלטות, בקשות, פרוטוקולים ומועדים קרובים, עם התראה לטלפון או לטלגרם.</p>
+<p>הקבצים נשמרים במחשב שלכם ובגוגל דרייב של המשרד, ואפשר לצפות בהם גם מהטלפון ולשתף לקוחות בגישה מבוקרת.</p>
+</section>
+
+<section id="install">
+<h2>2. התקנה על המק</h2>
+<h3>דרישות</h3>
+<ul>
+<li>מחשב מק עם macOS עדכני, חיבור לאינטרנט וכמה ג׳יגה־בייט פנויים לתיקים.</li>
+<li>חשבון Google (לחיבור לדרייב של המשרד).</li>
+<li>פרטי הכניסה שלכם ל־gov.il (תעודת זהות וסיסמה) — לאתרי בתי המשפט.</li>
+<li>מומלץ: הצפנת דיסק (FileVault) פעילה. בודקים בהגדרות המערכת ← פרטיות ואבטחה.</li>
+</ul>
+<h3>הורדה</h3>
+<div class="dl">
+<a href="https://github.com/lias-ai-app/lias-releases/releases/latest"><b>LIAS למק (DMG)</b>הגרסה האחרונה — קובץ <span class="k">.dmg</span></a>
+<a href="https://lias-ai-app.github.io/app/"><b>אפליקציית הטלפון</b>אנדרואיד — דף ההתקנה</a>
+<a href="https://lias-ai-app.github.io/addon/"><b>התוסף לפיירפוקס</b>לכניסה ל־gov.il מהטלפון</a>
+</div>
+<h3>התקנה</h3>
+<ol>
+<li>בדף ההורדה, תחת <b>Assets</b>, לחצו על הקובץ שמסתיים ב־<span class="k">.dmg</span>.</li>
+<li>פתחו את הקובץ שירד וגררו את LIAS לתיקיית <b>Applications</b>.</li>
+<li>פתחו את LIAS מתיקיית Applications (לא מתוך חלון ה־DMG).</li>
+</ol>
+<div class="box warn"><b>אם macOS אומר שאי אפשר לפתוח את היישום:</b> פתחו את הגדרות המערכת ← <b>פרטיות ואבטחה</b>, גללו למטה ולחצו <span class="btn">פתח בכל זאת</span> (Open Anyway) ליד LIAS, ואשרו בסיסמת המק. עושים את זה פעם אחת בלבד.</div>
+<h3>בקשות הרשאה שיופיעו</h3>
+<ul>
+<li><b>גישה לתיקיות (מסמכים / דיסק נשלף):</b> אשרו. כך LIAS יכול לשמור את התיקים ולגבות לדיסק USB.</li>
+<li><b>התראות:</b> אשרו, כדי לקבל הודעה כשמגיע מסמך חדש.</li>
+<li><b>מחזיק המפתחות (Keychain):</b> macOS ישאל אם לאפשר ל־LIAS להשתמש בפריט שמור. הקלידו את סיסמת המק ובחרו <span class="btn">אפשר תמיד</span> (Always Allow). כך הסיסמאות שלכם נשמרות מוצפנות ב־Keychain ולא בקבצים. אחרי עדכון גרסה השאלה עשויה לחזור — שוב <b>אפשר תמיד</b>.</li>
+</ul>
+</section>
+
+<section id="activate">
+<h2>3. הפעלה ראשונה</h2>
+<p>בפתיחה הראשונה יופיע מסך <b>הפעלת LIAS</b>. המחשב צריך אישור מהמשרד לפני שמתחילים לעבוד. זה שלושה צעדים קצרים:</p>
+<ol>
+<li>כתבו את שמכם בשדה <b>שם / משרד</b> ולחצו <span class="btn">צור קוד בקשה</span>.</li>
+<li>יופיע קוד שמתחיל ב־<span class="k">LIAS-A-…</span>. לחצו <span class="btn">העתק</span> ושלחו אותו למנהל המשרד — בוואטסאפ או במייל — יחד עם שמכם המלא. זה כל מה שצריך לשלוח.</li>
+<li>המשרד מאשר ושולח לכם בחזרה קוד שמתחיל ב־<span class="k">LIAS-L-…</span>. הדביקו אותו בשדה השלישי ולחצו <span class="btn">הפעל</span>.</li>
+</ol>
+<figure><img src="img/01-activate.jpg" alt="מסך הפעלת LIAS: שם, קוד בקשה LIAS-A והדבקת קוד הפעלה LIAS-L" loading="lazy"><figcaption>מסך ההפעלה אחרי "צור קוד בקשה". הקוד בתמונה הוא דוגמה.</figcaption></figure>
+<div class="box tip"><b>איך המשרד מאשר:</b> מנהל המשרד פותח אצלו בכלים את <b>אישור עורכי דין ומכשירים</b>. בלשונית <b>קוד בקשה</b> הוא מדביק את הקוד ששלחתם ומקבל קוד הפעלה בשבילכם. בלשונית <b>קישור הזמנה</b> הוא יכול גם לשלוח לכם קישור הצטרפות מראש, ובלשונית <b>בקשות ממתינות</b> הוא רואה ומאשר בקשות שהגיעו מהטלפון. מצדכם — רק שולחים את קוד הבקשה ומדביקים את מה שחוזר.</div>
+<p>קוד ההפעלה שייך למחשב הזה בלבד. מחשב חדש = קוד בקשה חדש. הכפתור <span class="btn">הסבר עם תמונות</span> במסך עצמו מראה את אותו תהליך.</p>
+<figure><img src="img/01-activate-dark.jpg" alt="מסך ההפעלה במצב כהה" loading="lazy"><figcaption>אותו מסך במצב כהה, לפני יצירת הקוד.</figcaption></figure>
+</section>
+
+<section id="setup">
+<h2>4. מה מגדירים קודם, לפי הסדר</h2>
+<p>כל ההגדרות נמצאות ב־<b>הגדרות</b> (בסרגל הצד). יש שם גם חיפוש בהגדרות, וכפתור <span class="btn">הגדרת LIAS</span> שמוביל אתכם צעד אחר צעד.</p>
+
+<h3>א. חיבור לגוגל דרייב</h3>
+<p>הגדרות ← <b>דרייב וגיבוי</b> ← <span class="btn">חבר את Google Drive</span>. נפתח דפדפן עם דף ההסכמה של Google: בחרו את חשבון ה־Google שהמשרד ביקש ואשרו. אם המשרד נתן לכם שם או מזהה של תיקיית שורש — הדביקו אותו ב"תיקיית שורש ב־Drive" ולחצו <span class="btn">שמור</span>.</p>
+<figure><img src="img/02-drive.jpg" alt="הגדרות דרייב וגיבוי" loading="lazy"></figure>
+
+<h3>ב. פרטי הכניסה לבתי המשפט וקוד האימות</h3>
+<p>הגדרות ← <b>אתרים וכניסה</b>. תחת <b>התחברות ל־gov.il</b> הקלידו תעודת זהות וסיסמה. הם נשמרים במחזיק המפתחות של המק בלבד.</p>
+<p>gov.il שולח קוד חד־פעמי (OTP) בכל כניסה. יש שתי דרכים:</p>
+<ul>
+<li><b>SMS לטלפון:</b> אתם מקלידים את הקוד כשמתבקשים. פשוט, אבל דורש אתכם ליד המחשב.</li>
+<li><b>מייל (מומלץ):</b> סמנו <b>קבל את קוד האימות אוטומטית מהמייל</b> ומלאו כתובת מייל וסיסמת אפליקציה. כך LIAS קורא את הקוד לבד וממשיך להוריד גם בלילה. כדי שזה יעבוד, ב־gov.il צריך לבחור שהקוד יישלח למייל הזה.</li>
+</ul>
+<div class="box tip"><b>מה זו סיסמת אפליקציה של Google ואיך יוצרים אותה:</b> סיסמה נפרדת בת 16 אותיות שמאפשרת לתוכנה אחת לקרוא את המייל, בלי למסור את הסיסמה הרגילה שלכם, ואפשר לבטל אותה בכל רגע.
+<ol>
+<li>היכנסו ל־<span class="k">myaccount.google.com</span> ← <b>אבטחה</b>, וודאו ש<b>אימות דו־שלבי</b> פעיל (בלעדיו האפשרות לא מופיעה).</li>
+<li>חפשו בחשבון "<b>סיסמאות לאפליקציות</b>" (App passwords).</li>
+<li>תנו שם, למשל <span class="k">LIAS</span>, ולחצו <b>צור</b>.</li>
+<li>העתיקו את 16 האותיות לשדה <b>סיסמת אפליקציה</b> ב־LIAS (בלי רווחים) ושמרו. הסיסמה מוצגת פעם אחת — אין צורך לשמור אותה במקום אחר.</li>
+</ol></div>
+<p>באותו מסך, תחת <b>אילו תיקים להוריד</b>, סמנו את הערכאות הרלוונטיות.</p>
+<figure><img src="img/03-court-signin.jpg" alt="אתרים וכניסה: תעודת זהות, סיסמה, קוד אימות מהמייל" loading="lazy"><figcaption>השדות ריקים בתמונה. לעולם אל תצלמו את המסך הזה כשהוא מלא.</figcaption></figure>
+
+<h3>ג. התראות בטלגרם (רשות)</h3>
+<p>הגדרות ← <b>התראות וטלגרם</b>. כאן בוחרים מי מקבל התראה ועל אילו סוגי מסמכים. הבוט של המשרד מוגדר על ידי המנהל; אתם רק פותחים איתו שיחה בטלגרם (כדי שיוכל לשלוח לכם) ומוסיפים את עצמכם כנמען.</p>
+<figure><img src="img/04-telegram.jpg" alt="התראות וטלגרם" loading="lazy"></figure>
+
+<h3>ד. אפליקציית הטלפון</h3>
+<ol>
+<li>התקינו את האפליקציה מ־<a href="https://lias-ai-app.github.io/app/">lias-ai-app.github.io/app</a>.</li>
+<li>באפליקציה בחרו לשלוח <b>בקשת חיבור</b> (או סרקו קוד מהמק: הגדרות ← <b>טלפון ותיאום</b> ← <span class="btn">צמד טלפון</span>).</li>
+<li>הבקשה מגיעה למשרד, ל"בקשות ממתינות" ב<b>אישור עורכי דין ומכשירים</b>. אחרי האישור הטלפון מציג את התיקים.</li>
+</ol>
+<div class="twocol">
+<figure><img src="img/12-phone-pair.jpg" alt="צימוד טלפון מהמק" loading="lazy"><figcaption>צימוד בקוד. הקודים בתמונה טושטשו — קוד צימוד לא מצלמים ולא שולחים.</figcaption></figure>
+<figure class="phone"><img src="img/13-phone-app.jpg" alt="אפליקציית LIAS בטלפון" loading="lazy"><figcaption>האפליקציה בטלפון (נתוני דוגמה).</figcaption></figure>
+</div>
+<figure><img src="img/05-phone-settings.jpg" alt="הגדרות טלפון ותיאום במק" loading="lazy"></figure>
+
+<h3>ה. התוסף לפיירפוקס — כניסה ל־gov.il מהטלפון</h3>
+<p>כשאתם לא ליד המק, אפשר להיכנס ל־gov.il מפיירפוקס בטלפון, והכניסה עוברת ל־LIAS.</p>
+<ol>
+<li>התקינו פיירפוקס בטלפון (Google Play).</li>
+<li>פתחו בפיירפוקס את <a href="https://lias-ai-app.github.io/addon/">lias-ai-app.github.io/addon</a> ואשרו "הוספה" ל־LIAS Sign-in.</li>
+<li>במק: הגדרות ← <b>התחברות</b> ← "חיבור טלפון (פיירפוקס לאנדרואיד)" ← <span class="btn">צור קוד חיבור</span>, ופתחו את הקישור בפיירפוקס בטלפון.</li>
+</ol>
+<figure><img src="img/06-signin-addon.jpg" alt="הגדרות התחברות: תוסף לכרום ולפיירפוקס" loading="lazy"></figure>
+
+<h3>ו. גיבוי סודות לדיסק USB</h3>
+<p>הגדרות ← <b>פרטיות ואבטחה</b> ← <b>גיבוי סודות</b>. בחרו סיסמת גיבוי של 12 תווים לפחות, הקלידו אותה פעמיים ולחצו <span class="btn">שמירה בדיסק USB</span>. הקובץ מכיל את כל הסיסמאות והחיבורים, מוצפן. בלי סיסמת הגיבוי אי אפשר לשחזר — שמרו אותה במקום בטוח (לא באותו דיסק). צרו גיבוי חדש בכל פעם שאתם משנים סיסמה.</p>
+<figure><img src="img/07-secrets-backup.jpg" alt="פרטיות ואבטחה: גיבוי סודות" loading="lazy"></figure>
+</section>
+
+<section id="first">
+<h2>5. הורדה ראשונה של תיק</h2>
+<ol>
+<li>ודאו שהגדרתם פרטי gov.il וערכאות (סעיף 4ב).</li>
+<li>הורדה ראשונה מתחילה מעצמה לפי התזמון (הגדרות ← <b>הורדה ותזמון</b>), או מיד מהכפתור להורדה בתוכנה. אם מתבקש קוד SMS — הקלידו אותו.</li>
+<li>הפעם הראשונה ארוכה יותר: מורדים כל התיקים הפתוחים. ההבאות מורידות רק מה שחדש.</li>
+</ol>
+<p><b>איפה המסמכים מופיעים:</b></p>
+<ul>
+<li><b>מסך הבית</b> — "מסמכים חדשים" של היום, ו"יומן קרוב" עם דיונים ומועדים.</li>
+<li><b>תיקים</b> — כל תיק עם המסמכים שלו לפי תאריך וסוג. לחיצה על מסמך פותחת אותו.</li>
+<li><b>בדיסק</b> — בתיקיית הנתונים (הגדרות ← פרטיות ואבטחה ← תיקיית הנתונים ← <span class="btn">הצג ב־Finder</span>), ובדרייב של המשרד.</li>
+</ul>
+<figure><img src="img/08-home.jpg" alt="מסך הבית: מסמכים חדשים ויומן קרוב" loading="lazy"><figcaption>מסך הבית אחרי הורדה (תיקי דוגמה).</figcaption></figure>
+<figure><img src="img/08-home-dark.jpg" alt="מסך הבית במצב כהה" loading="lazy"></figure>
+</section>
+
+<section id="clients">
+<h2>6. לקוחות</h2>
+<h3>הוספת לקוח</h3>
+<p>במסך <b>לקוחות</b> לוחצים <span class="btn">הוסף לקוח</span>, כותבים את שם הלקוח ולוחצים <span class="btn">צור לקוח וקישור</span>. LIAS יוצר קישור כניסה ופותח את דף הלקוח.</p>
+<figure><img src="img/10-client-new.jpg" alt="הוספת לקוח" loading="lazy"></figure>
+<h3>שליחת קישור כניסה</h3>
+<p>הלקוח נכנס דרך הקישור עם ה־gov.il שלו, וכך LIAS מוריד גם את התיקים שלו. בשורה של כל לקוח רואים את המצב: <b>מחובר עד…</b>, <b>הקישור נשלח</b>, או <b>צריך קישור חדש</b> — לחיצה על התגית שולחת קישור חדש (בוואטסאפ או בהעתקה). לקישור יש תוקף מוגבל.</p>
+<figure><img src="img/09-clients.jpg" alt="רשימת לקוחות עם מצב חיבור" loading="lazy"><figcaption>לקוחות דוגמה.</figcaption></figure>
+<h3>הרשאות לטלפון של לקוח</h3>
+<p>כשלקוח מתקין את האפליקציה ומבקש חיבור, הבקשה מופיעה למעלה במסך הלקוחות. משייכים אותה ללקוח ובוחרים הרשאה:</p>
+<table>
+<tr><th>הרשאה</th><th>מה הלקוח יכול</th></tr>
+<tr><td><b>צפייה בלבד</b></td><td>רואה את התיקים והמסמכים שלו באפליקציה. לא מוריד ולא משנה. רק המק מוריד.</td></tr>
+<tr><td><b>הורדה</b></td><td>הטלפון מוריד עבור הלקוח במקביל למק, בלי לשתף כניסה.</td></tr>
+<tr><td><b>הורדה בשיתוף המק</b></td><td>הטלפון מוריד ומשתף את הכניסה שלו ל־gov.il עם המק.</td></tr>
+</table>
+<figure><img src="img/11-permissions.jpg" alt="בקשת חיבור ובחירת הרשאה" loading="lazy"></figure>
+<p>אפשר לשנות הרשאה או לבטל חיבור בכל רגע מדף הלקוח, וכל שינוי נרשם ביומן.</p>
+</section>
+
+<section id="lists">
+<h2>7. רשימות</h2>
+<h3>מה שולחים למשרד</h3>
+<ul>
+<li>שם מלא ואת קוד הבקשה <span class="k">LIAS-A-…</span> (וואטסאפ או מייל למנהל המשרד).</li>
+<li>את כתובת חשבון ה־Google שבה תתחברו לדרייב, אם המשרד ביקש.</li>
+<li>שם הטלפון (למשל "הטלפון של דנה") כשאתם שולחים בקשת חיבור מהאפליקציה — כדי שיזהו אותה.</li>
+<li>בתקלה: צילום מסך של הודעת השגיאה (בלי סיסמאות) ושעה משוערת.</li>
+</ul>
+<h3>מה לעולם לא שולחים</h3>
+<div class="box bad"><ul>
+<li>סיסמת gov.il, תעודת זהות יחד עם סיסמה, סיסמת המייל או סיסמת אפליקציה של Google.</li>
+<li>קודי SMS / קודי אימות חד־פעמיים — לא בצ׳אט, לא בוואטסאפ ולא בטלפון, גם לא למשרד.</li>
+<li>קוד צימוד או QR של הטלפון, וסיסמת גיבוי הסודות.</li>
+<li>צילום מסך של מסך "אתרים וכניסה" כשהשדות מלאים.</li>
+</ul>
+אף אחד מהמשרד או מ־LIAS לא יבקש מכם את אלה. מי שמבקש — לא שולחים.</div>
+<h3>תקלות נפוצות</h3>
+<table>
+<tr><th>מה רואים</th><th>מה עושים</th></tr>
+<tr><td>"לא ניתן לפתוח את היישום" בהתקנה</td><td>הגדרות המערכת ← פרטיות ואבטחה ← <b>פתח בכל זאת</b>.</td></tr>
+<tr><td>"ממתין לאישור גישה למחזיק המפתחות"</td><td>קורה אחרי עדכון. הקלידו את סיסמת המק בחלון של macOS ובחרו <b>אפשר תמיד</b>. זה לא מכשיר חדש ואין צורך בקוד חדש.</td></tr>
+<tr><td>קוד ההפעלה נדחה</td><td>ודאו שהדבקתם את כל הקוד, מ־<span class="k">LIAS-L-</span> ועד הסוף, ושהוא נוצר עבור קוד הבקשה של המחשב הזה. אם יצרתם קוד בקשה חדש — שלחו אותו שוב למשרד.</td></tr>
+<tr><td>"לא הוגדרו פרטי התחברות — הבדיקות לא יוכלו לרוץ"</td><td>מלאו תעודת זהות וסיסמה ב"אתרים וכניסה".</td></tr>
+<tr><td>ההורדה נעצרת על קוד אימות</td><td>הפעילו "קבל את קוד האימות אוטומטית מהמייל" ובדקו את סיסמת האפליקציה. ב־gov.il הקוד צריך להישלח לאותו מייל.</td></tr>
+<tr><td>הדרייב מסומן באדום / "נעצר"</td><td>דרייב וגיבוי ← <b>חבר מחדש</b> ובחרו את אותו חשבון Google.</td></tr>
+<tr><td>הטלפון לא מציג תיקים</td><td>ודאו שהמשרד אישר את הבקשה, ושהטלפון מחובר לאותו חשבון Google. משיכה של המסך למטה מרעננת.</td></tr>
+<tr><td>בדיקת "אני לא רובוט" באתר בית המשפט</td><td>לא לנסות שוב ושוב — ניסיונות חוזרים מחמירים את החסימה. חכו מעט ונסו פעם אחת, או פנו למשרד.</td></tr>
+</table>
+</section>
+
+<footer>LIAS · מדריך הצטרפות לעורך דין · אוקטובר 2026 · כל השמות, המספרים והקודים בתמונות הם דוגמה.</footer>
+</main>
+</body>
+</html>
