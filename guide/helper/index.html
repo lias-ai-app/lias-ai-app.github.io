@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LIAS — מחשב עוזר לניתוח</title>
+<style>
+:root{--bg:#f6f5f1;--fg:#1d1d1f;--mut:#5b5b62;--card:#fff;--line:#e3e1da;--acc:#2f5bd3;--warn:#a1520b;--warnbg:#fff4e5;--bad:#b42318;--badbg:#fdecea;--ok:#157a3c;--okbg:#e8f6ee;--code:#eef0f4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}}
+:root[data-theme="dark"]{--bg:#121417;--fg:#ececee;--mut:#a4a6ad;--card:#1c1f24;--line:#2c3038;--acc:#7ea2ff;--warn:#f0b35c;--warnbg:#2b2216;--bad:#ff8a80;--badbg:#2e1a1a;--ok:#6fd49a;--okbg:#15281d;--code:#262a31}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;text-align:right;line-height:1.7;font-size:17px}
+main{max-width:860px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:30px;line-height:1.25;margin:0 0 6px}
+.lead{color:var(--mut);margin:0 0 18px}
+nav.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 26px}
+nav.toc ol{margin:6px 0 0;padding-inline-start:22px}
+nav.toc a{color:var(--acc);text-decoration:none}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 8px;margin:0 0 22px}
+h2{font-size:22px;margin:0 0 10px;color:var(--acc)}
+h3{font-size:18px;margin:18px 0 6px}
+p{margin:0 0 12px}
+ol,ul{margin:0 0 12px;padding-inline-start:24px}
+li{margin:0 0 6px}
+figure{margin:12px 0 18px}
+figure img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid var(--line)}
+figure.phone img{max-width:300px;margin-inline:auto}
+figcaption{color:var(--mut);font-size:14px;margin-top:6px}
+code,.k{direction:ltr;unicode-bidi:isolate;font-family:ui-monospace,Menlo,monospace;background:var(--code);border-radius:6px;padding:1px 6px;font-size:.9em;overflow-wrap:anywhere}
+.btn{display:inline-block;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:0 8px;font-weight:600}
+.box{border-radius:12px;padding:12px 14px;margin:0 0 14px}
+.tip{background:var(--okbg);color:var(--fg);border-inline-start:4px solid var(--ok)}
+.warn{background:var(--warnbg);border-inline-start:4px solid var(--warn)}
+.bad{background:var(--badbg);border-inline-start:4px solid var(--bad)}
+a{color:var(--acc)}
+.dl{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:6px 0 14px}
+.dl a{display:block;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-decoration:none;color:var(--fg)}
+.dl b{display:block;color:var(--acc)}
+table{width:100%;border-collapse:collapse;margin:0 0 14px;font-size:15px}
+th,td{border-bottom:1px solid var(--line);padding:8px 6px;vertical-align:top;text-align:right}
+th{color:var(--mut);font-weight:600}
+.twocol{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+@media (max-width:640px){body{font-size:16px}h1{font-size:25px}section{padding:14px 14px 4px}.twocol{grid-template-columns:1fr}table{font-size:14px}}
+footer{color:var(--mut);font-size:13px;text-align:center;margin-top:30px}
+<style>
+.mock{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);font-size:15px;margin:10px 0 6px}
+.mock .r{display:flex;flex-wrap:wrap;gap:2px 10px;padding:5px 0;border-top:1px solid var(--line)}
+.mock .r:first-of-type{border-top:0}.mock .m{color:var(--mut)}
+.mock .b{display:inline-block;margin-top:6px;border:1px solid var(--acc);color:var(--acc);border-radius:8px;padding:2px 10px;font-weight:600}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-inline-end:6px}
+.dot.idle{background:var(--mut)}
+</style>
+</head>
+<body>
+<main>
+<h1>מחשב עוזר לניתוח — מדריך</h1>
+<p class="lead">איך מחשב נוסף של המשרד (Mac או Windows) לוקח חלק מעבודת הניתוח של LIAS, במקביל למחשב הראשי. הכול רץ על מחשבי המשרד, בלי ענן.</p>
+<nav class="toc"><b>תוכן</b><ol>
+<li><a href="#how">איך זה עובד</a></li>
+<li><a href="#ram">איזה מחשב מתאים — זיכרון ומודלים</a></li>
+<li><a href="#mac">מסלול א׳: Mac ל־Mac</a></li>
+<li><a href="#win">מסלול ב׳: מחשב Windows</a></li>
+<li><a href="#see">איך רואים שזה עובד</a></li>
+<li><a href="#trouble">כשמשהו לא עובד</a></li>
+</ol></nav>
+
+<section id="how">
+<h2>1. איך זה עובד</h2>
+<p>הניתוח קורא כל מסמך בתיק פסקה אחר פסקה בעזרת מודל מקומי. כשמחשב עוזר מחובר, המחשב הראשי שם כל פנייה למודל על <b>לוח עבודה משותף</b> בדרייב של המשרד, והמחשב העוזר לוקח אותה, מריץ על המודל שלו ומחזיר תשובה.</p>
+<ul>
+<li><b>מוצפן:</b> לדרייב עולה רק טקסט מוצפן במפתח החשבון. רק מחשבים שאושרו בקוד הצימוד יכולים לקרוא.</li>
+<li><b>אף פעם לא פעמיים:</b> מחשב שלוקח עבודה רושם עליה „חכירה”. אם הוא נכבה או נרדם, החכירה פגה (עד 15 דקות) והעבודה חוזרת לתור; אם הוא מנותק מהחשמל, הוא מחזיר אותה מיד. תשובה מאוחרת נדחית.</li>
+<li><b>אין ענן:</b> המודלים רצים על המחשבים שלכם בלבד (Ollama).</li>
+<li><b>התיק נשאר בבית:</b> התוצאות נשמרות במחשב הראשי, שם רואים אותן.</li>
+</ul>
+</section>
+
+<section id="ram">
+<h2>2. איזה מחשב מתאים — זיכרון ומודלים</h2>
+<table>
+<tr><th>זיכרון (RAM)</th><th>מה להוריד</th><th>מה הוא יעשה</th></tr>
+<tr><td>8 GB ומטה</td><td><code>gemma4:e2b</code></td><td>לא מומלץ כעוזר — איטי ומפריע לעבודה במחשב.</td></tr>
+<tr><td>16 GB</td><td><code>gemma4:e4b</code></td><td>קריאת מסמכים (רוב העבודה).</td></tr>
+<tr><td>24 GB ומעלה</td><td><code>gemma4:e4b</code> + <code>gemma4:12b</code></td><td>גם קריאה וגם שיפוט (השלב שבודק סתירות).</td></tr>
+<tr><td>Windows עם כרטיס NVIDIA (8 GB VRAM ומעלה)</td><td>כמו לפי ה־RAM</td><td>הכי מהיר. צריך דרייבר NVIDIA 550 ומעלה.</td></tr>
+</table>
+<div class="box tip">במחשב העוזר, מסך „עיבוד משותף” מראה את הזיכרון, את הכרטיס הגרפי ואת המודל שנבחר לפיהם. במחשב הראשי, ברשימת „מחשבים שעובדים על הניתוח”, ליד כל עוזר מופיעים המודלים שמתאימים לזיכרון שלו.</div>
+</section>
+
+<section id="mac">
+<h2>3. מסלול א׳: Mac ל־Mac</h2>
+<ol>
+<li><b>מתקינים LIAS</b> ב־Mac השני מאותו קישור הורדה של המשרד, וגוררים ל־Applications.</li>
+<li><b>מתקינים Ollama</b> מ־<code>ollama.com</code> (או מתוך LIAS: הגדרות ← עיבוד משותף, בשורת Ollama).</li>
+<li><b>מורידים מודלים</b> לפי הטבלה. ב־Terminal:<br><code>ollama pull gemma4:e4b</code><br>ואם יש 24 GB ומעלה גם <code>ollama pull gemma4:12b</code>.</li>
+<li><b>מפעילים רישיון:</b> פותחים LIAS במחשב השני ושולחים בקשת מכשיר. במחשב של מנהל המשרד, בחלון <b>„אישור עורכי דין ומכשירים”</b>, מאשרים את הבקשה. כל עורך דין מקבל עד 5 מכשירים; אם המכסה מלאה רואים הודעה ואפשר להגדיל אותה שם.</li>
+<li><b>מחברים למשרד:</b> במחשב השני, הגדרות ← עיבוד משותף ← <span class="btn">קשר למחשב השני שלי</span>. מופיע קוד. במחשב הראשי, באותו מסך תחת „המחשבים שלי”, מקלידים את הקוד ולוחצים <span class="btn">אשר</span>.</li>
+<li><b>מדליקים מצב עוזר:</b> במחשב השני מדליקים <b>„המחשב הזה עוזר בעיבוד”</b> ומחכים שכל שורות הרשימה יסומנו ✓ (Ollama פועל, המודל מוכן, חשמל).</li>
+<li><b>שולחים עבודה:</b> במחשב הראשי, הגדרות ← עיבוד משותף, מדליקים <b>„לשלוח עבודה למחשבים האחרים שלי”</b>.</li>
+</ol>
+<div class="box warn">MacBook עוזר עובד רק כשהוא מחובר לחשמל (ברירת מחדל). כשמנתקים, העבודה שלו חוזרת לתור תוך שניות.</div>
+</section>
+
+<section id="win">
+<h2>4. מסלול ב׳: מחשב Windows</h2>
+<ol>
+<li><b>מתקינים LIAS ל־Windows</b> מקישור ההורדה של המשרד (קובץ ההתקנה). אם Windows מציג אזהרת SmartScreen — „מידע נוסף” ← „הפעל בכל זאת”.</li>
+<li><b>מתקינים Ollama ל־Windows</b> מ־<code>ollama.com/download</code>, או מתוך LIAS: הגדרות ← עיבוד משותף, בשורת Ollama. עם כרטיס NVIDIA — מעדכנים דרייבר (הכפתור במסך פותח את דף NVIDIA).</li>
+<li><b>מורידים מודלים</b> ב־PowerShell:<br><code>ollama pull gemma4:e4b</code><br>ועם 24 GB זיכרון ומעלה: <code>ollama pull gemma4:12b</code>.</li>
+<li><b>מפעילים רישיון</b> דרך חלון <b>„אישור עורכי דין ומכשירים”</b> במחשב של מנהל המשרד: הבקשה של המחשב החדש מופיעה ברשימת הממתינים; בוחרים את עורך הדין ולוחצים אישור.</li>
+<li><b>מחברים למשרד</b> בקוד הצימוד, בדיוק כמו במסלול Mac (סעיף 3, צעד 5).</li>
+<li><b>מדליקים „המחשב הזה עוזר בעיבוד”</b>. אפשר לקבוע שיעבוד רק כשמחובר לחשמל ורק כשאין מי שעובד עליו.</li>
+<li>במחשב הראשי מדליקים <b>„לשלוח עבודה למחשבים האחרים שלי”</b>. מחשב עם כרטיס גרפי מקבל עדיפות בשלבים שמסומנים „GPU”.</li>
+</ol>
+</section>
+
+<section id="see">
+<h2>5. איך רואים שזה עובד</h2>
+<p>במסך הניתוח של התיק יש עכשיו תיבה <b>„מחשבים שעובדים על הניתוח”</b>: המחשב הזה וכל העוזרים, על איזה תיק כל אחד עובד ומתי דיווח לאחרונה.</p>
+<div class="mock" role="img" aria-label="דוגמה לתיבת המחשבים במסך הניתוח">
+<b>מחשבים שעובדים על הניתוח</b>
+<div class="r"><b><span class="dot"></span>המחשב הזה</b><span>על תיק 12345-01-26</span></div>
+<div class="r"><b><span class="dot"></span>office-pc</b><span class="m">windows · 32 GB זיכרון</span><span>על תיק 12345-01-26</span><span class="m">דיווח אחרון: עכשיו</span></div>
+<div class="r"><b><span class="dot idle"></span>mac-mini</b><span class="m">mac · 16 GB זיכרון</span><span>פנוי</span><span class="m">דיווח אחרון: לפני 2 דק׳</span></div>
+<span class="b">הוסף מחשב עוזר</span>
+</div>
+<p class="m" style="color:var(--mut);font-size:14px">דוגמה בלבד (שמות מומצאים). הכפתור „הוסף מחשב עוזר” פותח את הצעדים בקצרה וקישור למדריך הזה.</p>
+</section>
+
+<section id="trouble">
+<h2>6. כשמשהו לא עובד</h2>
+<ul>
+<li><b>העוזר לא מופיע ברשימה:</b> בדקו שהוא נדלק, שכל השורות ✓, ושהקוד אושר. אם הדיווח האחרון ישן מיותר משתי דקות — המחשב כבוי, ישן או מנותק מהרשת.</li>
+<li><b>„מפתח לא תואם”:</b> המחשב צומד לחשבון אחר. מבקשים שוב קוד במסך „המחשבים שלי”.</li>
+<li><b>המודל לא נטען ב־Windows:</b> הזיכרון בכרטיס קטן מדי לשתי עבודות במקביל. המסך „עיבוד משותף” מסמן זאת ומציע לרדת לעבודה אחת בכל פעם.</li>
+<li><b>העבודה חזרה למחשב הראשי:</b> זה מכוון. אם אף עוזר לא לקח את הפנייה תוך כ־45 שניות, המחשב הראשי מריץ בעצמו.</li>
+</ul>
+</section>
+<footer>LIAS · מדריך מחשב עוזר לניתוח · 30.10.2026</footer>
+</main>
+</body>
+</html>
