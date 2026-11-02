@@ -26,6 +26,10 @@
         {
           "version": "0.4.7",
           "update_link": "https://lias-ai-app.github.io/addon/lias-signin-0.4.7.xpi"
+        },
+        {
+          "version": "0.4.8",
+          "update_link": "https://lias-ai-app.github.io/addon/lias-signin-0.4.8.xpi"
         }
       ]
     }
