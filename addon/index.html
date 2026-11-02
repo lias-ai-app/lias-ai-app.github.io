@@ -76,7 +76,8 @@
 </head>
 <body>
 <main>
-  <!-- Install wizard for the LIAS Sign-in add-on (PLAN-033).
+  <!-- Source of truth: lias-unified tools/firefox_extension_pages/addon/; copy to the pages repo as /addon/.
+       Install wizard for the LIAS Sign-in add-on (PLAN-033).
        lias-signin.xpi is always the latest signed build; updates.json is the add-on's update_url.
        From 0.4.1 the add-on's mark.js sets <html data-lias-addon="<version>" data-lias-paired="true|false">
        on this page only, so finished steps are detected. 0.4.0 has no marker: the manual buttons cover it. -->
@@ -87,6 +88,23 @@
   <div class="banner warn" id="ios" hidden>
     <b>אייפון ואייפד אינם נתמכים.</b> פיירפוקס באייפון לא מאפשר להתקין תוספים, ולכן אי אפשר להשתמש בתוסף שם.
     אפשר להתקין אותו במחשב (מק או חלונות) או בטלפון אנדרואיד. שלחו לעצמכם את הקישור לדף הזה ופתחו אותו שם.
+  </div>
+  <div class="banner warn" id="update" hidden>
+    <b id="update-title">יש גרסה חדשה — עדכון</b>
+    <p id="update-have" class="note"></p>
+    <div data-dev="android">
+      <p>פיירפוקס בטלפון מעדכן תוספים לבד, בערך פעם ביום. כדי לעדכן עכשיו:</p>
+      <ol>
+        <li>בפיירפוקס: תפריט ⋮ ← <b>תוספות</b> ← <b>LIAS Sign-in</b>.</li>
+        <li>בדף התוסף: ⋮ ← <b>"חפש עדכונים"</b>, אם האפשרות מופיעה.</li>
+        <li>אין אפשרות כזו? מתקינים מחדש בכפתור למטה (לפי שלב 2), והחיבור נשמר.</li>
+      </ol>
+      <a class="btn" href="lias-signin.xpi" download="lias-signin.xpi">הורד את הגרסה החדשה</a>
+    </div>
+    <div data-dev="desktop">
+      <p>פיירפוקס מעדכן תוספים לבד. כדי לעדכן עכשיו: <code>about:addons</code> ← גלגל השיניים ← <b>"בדיקת עדכונים"</b>, או התקנה מחדש בכפתור למטה.</p>
+      <a class="btn" href="lias-signin.xpi">התקן את הגרסה החדשה</a>
+    </div>
   </div>
   <p><button class="link" id="toggle-all" type="button">הצג את כל השלבים לכל המכשירים</button></p>
 
@@ -198,8 +216,30 @@
     render();
   });
 
+  // The latest version from the add-on's own update manifest (updates.json beside this page).
+  var latest = "";
+  function cmp(a, b) {
+    var x = a.split("."), y = b.split(".");
+    for (var k = 0; k < Math.max(x.length, y.length); k++) {
+      var d = (parseInt(x[k], 10) || 0) - (parseInt(y[k], 10) || 0);
+      if (d) return d < 0 ? -1 : 1;
+    }
+    return 0;
+  }
+  fetch("updates.json", { cache: "no-store" }).then(function (r) { return r.json(); }).then(function (j) {
+    var a = (j.addons || {})[Object.keys(j.addons || {})[0]] || {};
+    (a.updates || []).forEach(function (u) { if (u.version && (!latest || cmp(u.version, latest) > 0)) latest = u.version; });
+    render();
+  }).catch(function () {});
+
   function render() {
     var version = html.dataset.liasAddon || "";
+    var old = isFirefox && !!version && !!latest && cmp(version, latest) < 0;
+    document.getElementById("update").hidden = !old;
+    if (old) {
+      document.getElementById("update-title").textContent = "יש גרסה חדשה (" + latest + ") — עדכון";
+      document.getElementById("update-have").textContent = "אצלכם מותקנת גרסה " + version + ".";
+    }
     var paired = html.dataset.liasPaired === "true";
     var installed = isFirefox && (!!version || manualInstalled);
     var done = { ff: isFirefox, install: installed, pair: installed && paired };
@@ -214,10 +254,10 @@
       var li = document.querySelector('#progress [data-s="' + s + '"]');
       li.className = done[s] ? "done" : s === now ? "now" : "";
     });
-    document.getElementById("install-state").textContent = version ? "✓ התוסף מותקן (גרסה " + version + ")" : "✓ סימנתם שהתוסף מותקן";
+    document.getElementById("install-state").textContent = version ? (old ? "התוסף מותקן (גרסה " + version + ", יש " + latest + ")" : "✓ התוסף מותקן (גרסה " + version + ")") : "✓ סימנתם שהתוסף מותקן";
     document.getElementById("st-done").hidden = !!now;
     var parts = ["זוהה: " + DEV_NAME[dev], isFirefox ? "פיירפוקס" : "לא פיירפוקס"];
-    if (isFirefox) parts.push(version ? "התוסף מותקן" + (paired ? " ומחובר" : ", עדיין לא מחובר") : manualInstalled ? "התוסף סומן כמותקן" : "התוסף לא זוהה");
+    if (isFirefox) parts.push(version ? (old ? "התוסף מותקן בגרסה ישנה" : "✓ מותקן") + (paired ? " ומחובר" : ", עדיין לא מחובר") : manualInstalled ? "התוסף סומן כמותקן" : "התוסף לא זוהה");
     document.getElementById("detected").textContent = parts.join(" · ");
     if (now && document.readyState === "complete") {
       var target = document.getElementById("st-" + now);
