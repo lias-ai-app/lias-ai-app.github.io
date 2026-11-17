@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>LIAS — התחברות לעורך הדין</title>
+  <style>
+    :root { --bg:#f6f7f9; --surface:#fff; --line:#e6e8ec; --ink:#16181d; --mute:#6b717d; --accent:#2f5bea; --accent-weak:#e8eefe; --ok:#1f8a4c; --ok-weak:#e4f4ea; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#0f1115; --surface:#181b21; --line:#262a32; --ink:#eef0f4; --mute:#9aa0ab; --accent:#7c9bff; --accent-weak:#1c2540; --ok:#4cc27e; --ok-weak:#14291d; } }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, sans-serif; text-align:right; }
+    main { max-width:520px; margin:0 auto; padding:20px 16px 40px; }
+    h1 { font-size:20px; margin:0 0 4px; } .lead { color:var(--mute); margin:0 0 14px; font-size:15px; }
+    .step { background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px 14px; margin:8px 0; display:flex; gap:10px; }
+    .num { flex:none; width:24px; height:24px; border-radius:50%; background:var(--accent-weak); color:var(--accent); display:grid; place-items:center; font-size:13px; font-weight:700; }
+    .step.done .num { background:var(--ok-weak); color:var(--ok); }
+    .step.off { opacity:.55; }
+    .t { font-weight:600; } .s { color:var(--mute); font-size:14px; margin-top:2px; }
+    .btn { display:inline-block; margin-top:8px; padding:8px 16px; border-radius:999px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; font-size:15px; border:0; cursor:pointer; }
+    .btn.ghost { background:var(--accent-weak); color:var(--accent); }
+    [hidden] { display:none !important; }
+  </style>
+</head>
+<body>
+<main>
+  <!-- Copy to the pages repo (lias-ai-app.github.io) as /connect/index.html.
+       The lawyer sends https://lias-ai-app.github.io/connect/#n=<name>&p=<pairing>: everything is in the
+       #fragment, which the browser never sends to a server. The LIAS Sign-in add-on's pair.js runs on this
+       page, takes the pairing (so the sign-in goes to this client only) and marks <html data-lias="paired">.
+       The sign-in itself starts at gov.il's own login (always up), never at a court site. -->
+  <h1 id="title">התחברות לעורך הדין</h1>
+  <p class="lead" id="lead">שלושה צעדים קצרים, פעם אחת. הסיסמה והקוד נשארים אצלך — עורך הדין לא רואה אותם.</p>
+  <p class="lead" id="bad" hidden>הקישור לא שלם. בקשו מעורך הדין לשלוח אותו שוב.</p>
+
+  <div id="steps">
+    <div class="step" id="s1"><div class="num">1</div><div>
+      <div class="t">פתחו את הקישור בפיירפוקס</div>
+      <div class="s" id="s1s">ההתחברות עובדת דרך הדפדפן פיירפוקס.</div>
+      <a class="btn" id="ff" href="#">פתח בפיירפוקס</a>
+      <button class="btn ghost" id="copy" type="button">העתק את הקישור</button>
+    </div></div>
+    <div class="step off" id="s2"><div class="num">2</div><div>
+      <div class="t">התקינו את התוסף LIAS</div>
+      <div class="s" id="s2s">לחצו "הוסף", ואז חזרו לקישור הזה.</div>
+      <a class="btn" id="xpi" href="https://lias-ai-app.github.io/addon/lias-signin.xpi">התקן את התוסף</a>
+    </div></div>
+    <div class="step off" id="s3"><div class="num">3</div><div>
+      <div class="t">התחברו ל־gov.il</div>
+      <div class="s">עם תעודת הזהות, הסיסמה והקוד שמגיע לטלפון שלכם. אחרי הכניסה יופיע למטה פס של LIAS: לחצו "שלח".</div>
+      <a class="btn" id="gov" href="https://login.gov.il/">כניסה ל־gov.il</a>
+    </div></div>
+    <p class="lead" id="end" hidden>✓ כשבפס של LIAS כתוב "נשלח" — החיבור הגיע לעורך הדין. אפשר לסגור.</p>
+  </div>
+</main>
+<script>
+(function () {
+  var PLAY = "https://play.google.com/store/apps/details?id=org.mozilla.firefox";
+  var GOV = "https://login.gov.il/";
+  var frag = location.hash.slice(1);
+  function get(k) { var m = new RegExp("(?:^|&)" + k + "=([^&]*)").exec(frag); try { return m ? decodeURIComponent(m[1]) : ""; } catch (e) { return ""; } }
+  var name = get("n"), pairing = get("p");
+  if (!pairing) { document.getElementById("bad").hidden = false; document.getElementById("steps").hidden = true; return; }
+  if (name) document.getElementById("title").textContent = "שלום " + name + ", התחברות לעורך הדין";
+  var link = location.href;
+  var ua = navigator.userAgent, isFirefox = /Firefox\//.test(ua), isAndroid = /Android/.test(ua);
+  function done(id) { var s = document.getElementById(id); s.classList.add("done"); s.classList.remove("off"); s.querySelector(".num").textContent = "✓"; }
+  function on(id) { document.getElementById(id).classList.remove("off"); }
+  document.getElementById("copy").addEventListener("click", function () {
+    var b = this;
+    (navigator.clipboard ? navigator.clipboard.writeText(link) : Promise.reject()).then(
+      function () { b.textContent = "הועתק — הדביקו בפיירפוקס"; }, function () { prompt("העתיקו את הקישור:", link); });
+  });
+  if (!isFirefox) {
+    var ff = document.getElementById("ff");
+    // An Android intent cannot carry the #fragment: Firefox is opened and the link is copied for pasting.
+    if (isAndroid) {
+      ff.href = "intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=org.mozilla.firefox;S.browser_fallback_url=" + encodeURIComponent(PLAY) + ";end";
+      ff.addEventListener("click", function () { try { navigator.clipboard.writeText(link); } catch (e) {} });
+      document.getElementById("s1s").textContent = "הקישור יועתק; הדביקו אותו בשורת הכתובת של פיירפוקס. אין פיירפוקס? הכפתור יפתח את ההתקנה.";
+    } else { ff.hidden = true; document.getElementById("s1s").textContent = "העתיקו את הקישור ופתחו אותו בפיירפוקס."; }
+    return;
+  }
+  done("s1"); on("s2");
+  document.getElementById("ff").hidden = true; document.getElementById("copy").hidden = true;
+  document.getElementById("s1s").textContent = "אתם בפיירפוקס.";
+  // The add-on marks this page once it took the pairing; until then step 2 stays open.
+  function paired() {
+    done("s2"); on("s3");
+    document.getElementById("xpi").hidden = true;
+    document.getElementById("s2s").textContent = name ? "התוסף מוכן ושולח את החיבור של " + name + " בלבד." : "התוסף מוכן.";
+    document.getElementById("end").hidden = false;
+  }
+  var tries = 0;
+  (function wait() {
+    if (document.documentElement.getAttribute("data-lias") === "paired") return paired();
+    if (++tries < 600) setTimeout(wait, 500);
+  })();
+  document.getElementById("gov").href = GOV;
+})();
+</script>
+</body>
+</html>
